@@ -1,0 +1,13 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/announcements/route": "/api/announcements",
+  "/api/contact/route": "/api/contact",
+  "/api/estimate/route": "/api/estimate",
+  "/api/health/route": "/api/health",
+  "/api/payouts/route": "/api/payouts",
+  "/api/shares/route": "/api/shares",
+  "/api/verify-matricule/route": "/api/verify-matricule",
+  "/page": "/",
+  "/suivi/page": "/suivi"
+}

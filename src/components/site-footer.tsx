@@ -26,8 +26,8 @@ export function SiteFooter() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/images/carmi-logo.png"
-                alt="Sceau CARMI"
+                src="/image/logocarmi.jpg"
+                alt="Logo CARMI"
                 width={48}
                 height={48}
                 className="h-12 w-12 rounded-lg bg-white object-contain p-0.5"

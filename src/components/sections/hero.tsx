@@ -43,12 +43,12 @@ export function Hero({ period, pensioners }: { period: string; pensioners: numbe
   return (
     <section className="relative isolate overflow-hidden bg-army-950 text-white">
       <Image
-        src="/images/hero-chad.jpg"
-        alt="Garde d'honneur de l'Armée Nationale Tchadienne au crépuscule"
-        fill
-        priority
-        sizes="100vw"
-        className="absolute inset-0 -z-20 h-full w-full object-cover opacity-45"
+       src="/image/dgcarmi.jpg"
+       alt="Directeur Général de la CARMI"
+       fill
+       priority
+       sizes="100vw"
+       className="absolute inset-0 -z-20 h-full w-full object-cover opacity-45"
       />
       <div
         className="absolute inset-0 -z-10 bg-gradient-to-b from-army-950/95 via-army-900/90 to-army-950"

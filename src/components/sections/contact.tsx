@@ -37,8 +37,8 @@ export function Contact({
     fullName: "",
     matricule: "",
     phone: "",
-    regionCode: regions[0]?.code ?? "RM1",
-    serviceSlug: services[0]?.slug ?? "pension-retraite",
+    regionCode: regions[0]?.code ?? "",
+    serviceSlug: services[0]?.slug ?? "suivi-paiement",
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
@@ -51,6 +51,7 @@ export function Contact({
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (status === "sending" || regions.length === 0) return;
     setStatus("sending");
     setErrors([]);
     try {
@@ -64,7 +65,7 @@ export function Contact({
         errors?: string[];
         trackingCode?: string;
       };
-      if (!data.ok) {
+      if (!res.ok || !data.ok || !data.trackingCode) {
         setErrors(data.errors ?? ["Erreur inconnue."]);
         setStatus("idle");
         return;
@@ -91,13 +92,17 @@ export function Contact({
         <SectionHeading
           eyebrow="Contact & Suivi"
           title="Déposez votre demande de suivi de pension"
-          intro="Vérification de matricule, suivi de dossier, solde non versée ou ayants droit : le guichet numérique CARMI transmet votre demande à l'antenne de votre région militaire."
+          intro="Enregistrez une demande liée à votre pension ou contactez la CARMI par les canaux indiqués."
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-5">
           <Reveal className="lg:col-span-3">
-            {status === "done" ? (
-              <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-5">
+            {regions.length === 0 ? (
+              <p className="rounded-2xl border border-slate-200 p-4 dark:border-white/10">
+                Le formulaire est actuellement indisponible. Contactez le standard CARMI.
+              </p>
+            ) : status === "done" ? (
+              <div role="status" className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-5">
                 <p className="inline-flex items-center gap-2 text-[0.75rem] font-black uppercase tracking-wide text-emerald-700 dark:text-emerald-300">
                   <BadgeCheck className="h-5 w-5" strokeWidth={2.2} />
                   Demande enregistrée
@@ -130,17 +135,19 @@ export function Contact({
               <form
                 onSubmit={submit}
                 className="rounded-2xl border border-slate-200 p-4 sm:p-5 dark:border-white/10"
-                noValidate
+                aria-busy={status === "sending"}
               >
-                <div className="grid gap-3 sm:grid-cols-2">
+                <fieldset disabled={status === "sending"} className="grid min-w-0 gap-3 sm:grid-cols-2">
                   <label className="block">
                     <span className={label}>Nom &amp; prénoms du demandeur</span>
                     <input
                       required
+                      minLength={3}
+                      maxLength={140}
                       value={form.fullName}
                       onChange={(e) => update("fullName", e.target.value)}
                       className={field}
-                      placeholder="Ex. Brahim Adoum Djibrine"
+                      placeholder="Votre nom complet"
                       autoComplete="name"
                     />
                   </label>
@@ -148,10 +155,12 @@ export function Contact({
                     <span className={label}>Matricule ANT / Pensionné</span>
                     <input
                       required
+                      minLength={4}
+                      maxLength={32}
                       value={form.matricule}
                       onChange={(e) => update("matricule", e.target.value.toUpperCase())}
                       className={field}
-                      placeholder="Ex. 08-M-014725"
+                      placeholder="Votre matricule"
                       inputMode="text"
                     />
                   </label>
@@ -159,10 +168,12 @@ export function Contact({
                     <span className={label}>Téléphone mobile (SMS / WhatsApp)</span>
                     <input
                       required
+                      type="tel"
+                      maxLength={40}
                       value={form.phone}
                       onChange={(e) => update("phone", e.target.value)}
                       className={field}
-                      placeholder="+235 66 00 00 00"
+                      placeholder="Votre numéro de téléphone"
                       inputMode="tel"
                       autoComplete="tel"
                     />
@@ -202,6 +213,7 @@ export function Contact({
                   <label className="block sm:col-span-2">
                     <span className={label}>Détail de votre demande</span>
                     <textarea
+                      maxLength={2000}
                       value={form.message}
                       onChange={(e) => update("message", e.target.value)}
                       rows={4}
@@ -209,10 +221,10 @@ export function Contact({
                       placeholder="Précisez votre situation : solde non versée, contrôle de vie, réversion, bancarisation…"
                     />
                   </label>
-                </div>
+                </fieldset>
 
                 {errors.length > 0 ? (
-                  <ul className="mt-3 space-y-1 rounded-xl border border-flag-red/40 bg-flag-red/10 p-3">
+                  <ul role="alert" className="mt-3 space-y-1 rounded-xl border border-flag-red/40 bg-flag-red/10 p-3">
                     {errors.map((error) => (
                       <li
                         key={error}

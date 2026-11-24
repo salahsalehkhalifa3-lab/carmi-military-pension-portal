@@ -76,6 +76,8 @@ function readPreference(key: string) {
 function writePreference(key: string, value: string) {
   try {
     window.localStorage.setItem(key, value);
+    if (key === "carmi-lang") languageOverride = undefined;
+    if (key === "carmi-theme") themeOverride = undefined;
   } catch {
     // A session override remains available when storage is blocked.
   }

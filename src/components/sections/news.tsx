@@ -45,7 +45,7 @@ export function News({ news }: { news: Announcement[] }) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Communiqués officiels"
-          title="Hub des annonces & partages virals"
+          title="Annonces et communiqués"
           intro="Diffusez les dates de paiement et les communiqués de la Direction Générale aux associations de vétérans, aux familles et aux groupes WhatsApp de garnison en un seul geste."
         />
 
@@ -73,6 +73,7 @@ export function News({ news }: { news: Announcement[] }) {
           </div>
         </Reveal>
 
+        {news.length === 0 && <p className="mt-4 text-slate-600 dark:text-slate-300">Aucun communiqué à afficher.</p>}
         <div className="mt-4 space-y-3">
           {news.map((item, index) => {
             const severity = SEVERITY[item.severity] ?? SEVERITY.info;
@@ -80,7 +81,7 @@ export function News({ news }: { news: Announcement[] }) {
             const SeverityIcon = severity.icon;
             return (
               <Reveal key={item.id} delay={index * 0.03}>
-                <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-white/10 dark:bg-tactical-900/70">
+                <article id={`annonce-${item.slug}`} className="scroll-mt-28 overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-white/10 dark:bg-tactical-900/70">
                   <button
                     type="button"
                     onClick={() => setExpanded(isOpen ? null : item.id)}
@@ -119,6 +120,7 @@ export function News({ news }: { news: Announcement[] }) {
                         </span>
                         <ShareRow
                           title={item.title}
+                          path={`/#annonce-${item.slug}`}
                           target={`annonce-${item.slug}`}
                           label="WhatsApp"
                         />

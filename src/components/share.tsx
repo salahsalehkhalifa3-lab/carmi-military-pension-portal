@@ -10,12 +10,13 @@ import {
   XIcon,
   YoutubeIcon,
 } from "@/components/brand-icons";
-import { CONTACT, SITE_URL, SOCIALS } from "@/lib/institution";
+import { CONTACT, SOCIALS } from "@/lib/institution";
 import { usePortal } from "@/lib/i18n";
 import {
   buildShareUrl,
   copyToClipboard,
   defaultShareMessage,
+  targetUrl,
   trackShare,
   type ShareChannel,
 } from "@/lib/share";
@@ -68,35 +69,34 @@ export function ShareButton({
   className?: string;
 }) {
   const Icon = CHANNEL_ICON[channel];
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
   const shareLabel = label ?? (channel === "copy" ? "Copier" : channel);
 
   return (
     <button
       type="button"
       onClick={async () => {
-        trackShare(channel, target);
         if (channel === "copy") {
-          const origin =
-            typeof window !== "undefined" ? window.location.origin : SITE_URL;
-          const done = await copyToClipboard(
-            path ? `${origin}${path}` : `${origin}${SITE_URL}`,
-          );
-          setCopied(done);
-          window.setTimeout(() => setCopied(false), 1800);
+          const done = await copyToClipboard(targetUrl(path));
+          if (done) trackShare(channel, target);
+          setCopyStatus(done ? "copied" : "failed");
           return;
         }
+        trackShare(channel, target);
         openShare(channel, buildShareUrl(channel, message, path));
       }}
       className={`tap-target inline-flex items-center justify-center gap-2 rounded-xl px-3 text-xs font-bold uppercase tracking-wide transition ${CHANNEL_STYLE[channel]} ${className}`}
       aria-label={`${shareLabel} — ${message.slice(0, 60)}`}
     >
-      {channel === "copy" && copied ? (
+      {channel === "copy" && copyStatus === "copied" ? (
         <Check className="h-4 w-4" strokeWidth={2.4} />
       ) : (
         <Icon className="h-4 w-4" strokeWidth={2.1} />
       )}
       <span className="hidden sm:inline">{shareLabel}</span>
+      <span className="sr-only" role="status">
+        {copyStatus === "copied" ? "Lien copié." : copyStatus === "failed" ? "Copie du lien indisponible." : ""}
+      </span>
     </button>
   );
 }
@@ -224,11 +224,11 @@ export function StickyMobileDock() {
         await nav.share({
           title: "C.A.R.M.I. — Caisse de Retraite des Militaires",
           text: message,
-          url: process.env.NEXT_PUBLIC_SITE_URL ?? "/",
+          url: targetUrl(),
         });
         return;
-      } catch {
-        /* annulation par l'utilisateur */
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
       }
     }
     openShare("whatsapp", buildShareUrl("whatsapp", message));

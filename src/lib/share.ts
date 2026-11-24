@@ -30,9 +30,9 @@ export const CHANNEL_LABELS: Record<ShareChannel, string> = {
   copy: "Copier le lien",
 };
 
-function targetUrl(path?: string): string {
-  if (!path) return SITE_URL;
-  return path.startsWith("http") ? path : `${SITE_URL}${path}`;
+export function targetUrl(path = "/"): string {
+  const origin = typeof window === "undefined" ? SITE_URL : window.location.origin;
+  return new URL(path, origin).href;
 }
 
 export function buildShareUrl(

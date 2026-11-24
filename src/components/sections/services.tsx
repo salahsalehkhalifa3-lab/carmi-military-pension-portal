@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Award,
@@ -15,7 +15,9 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+import { CONTACT } from "@/lib/institution";
 import type { PensionService } from "@/db/schema";
+import { useDialogKeyboard } from "@/lib/use-dialog-keyboard";
 import { IconBadge, Reveal, SectionHeading } from "@/components/ui";
 import { ShareRow } from "@/components/share";
 
@@ -35,6 +37,8 @@ const TONES: Record<string, "army" | "gold" | "navy"> = {
 
 export function Services({ services }: { services: PensionService[] }) {
   const [active, setActive] = useState<PensionService | null>(null);
+  const closeService = useCallback(() => setActive(null), []);
+  const dialogRef = useDialogKeyboard(active !== null, closeService);
 
   return (
     <section id="prestations" className="scroll-mt-24 bg-tactical-50 py-10 sm:py-14 dark:bg-tactical-950">
@@ -45,15 +49,17 @@ export function Services({ services }: { services: PensionService[] }) {
           intro="Cinq filières de service pour les militaires en activité, les vétérans de l'ANT, les blessés de guerre et les familles des Martyrs de la Nation. Touchez une prestation pour ouvrir la procédure complète."
         />
 
+        {services.length === 0 && <p className="mt-4 text-slate-600 dark:text-slate-300">Les fiches de prestations sont actuellement indisponibles.</p>}
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => {
             const Icon = ICONS[service.icon] ?? Award;
             return (
               <Reveal key={service.slug} delay={index * 0.04}>
                 <button
+                  id={`service-${service.slug}`}
                   type="button"
                   onClick={() => setActive(service)}
-                  className="group flex h-full w-full flex-col items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-start transition hover:-translate-y-0.5 hover:border-gold-500/60 hover:shadow-lg sm:p-5 dark:border-white/10 dark:bg-tactical-900/70 dark:hover:border-gold-500/50"
+                  className="group flex h-full scroll-mt-28 w-full flex-col items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-start transition hover:-translate-y-0.5 hover:border-gold-500/60 hover:shadow-lg sm:p-5 dark:border-white/10 dark:bg-tactical-900/70 dark:hover:border-gold-500/50"
                   aria-haspopup="dialog"
                 >
                   <div className="flex w-full items-start justify-between gap-3">
@@ -97,7 +103,7 @@ export function Services({ services }: { services: PensionService[] }) {
                 </p>
               </div>
               <a
-                href="https://wa.me/23566001122?text=Bonjour%20CARMI%2C%20je%20souhaite%20ouvrir%20un%20compte%20bancaire%20militaire."
+                href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent("Bonjour CARMI, je souhaite ouvrir un compte bancaire militaire.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="tap-target inline-flex items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950 transition hover:bg-gold-400"
@@ -113,6 +119,7 @@ export function Services({ services }: { services: PensionService[] }) {
       <AnimatePresence>
         {active ? (
           <motion.div
+            ref={dialogRef}
             className="fixed inset-0 z-[70] flex items-end justify-center sm:items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -125,8 +132,9 @@ export function Services({ services }: { services: PensionService[] }) {
             <button
               type="button"
               aria-label="Fermer"
+              tabIndex={-1}
               className="absolute inset-0 bg-army-950/75 backdrop-blur-sm"
-              onClick={() => setActive(null)}
+              onClick={closeService}
             />
             <motion.div
               initial={{ y: "100%" }}
@@ -154,7 +162,7 @@ export function Services({ services }: { services: PensionService[] }) {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setActive(null)}
+                  onClick={closeService}
                   className="tap-target inline-flex items-center justify-center rounded-xl border border-slate-200 px-3 text-slate-600 dark:border-white/15 dark:text-slate-200"
                   aria-label="Fermer"
                 >
@@ -212,6 +220,7 @@ export function Services({ services }: { services: PensionService[] }) {
                 <div className="mt-2">
                   <ShareRow
                     title={active.title}
+                    path={`/#service-${active.slug}`}
                     target={`service-${active.slug}`}
                     label="Envoyer"
                   />

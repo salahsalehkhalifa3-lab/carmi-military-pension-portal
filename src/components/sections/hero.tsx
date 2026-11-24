@@ -6,14 +6,7 @@ import { usePortal } from "@/lib/i18n";
 import { trackShare } from "@/lib/share";
 import { CONTACT } from "@/lib/institution";
 
-const STATS = [
-  { value: "52 000+", label: "Pensionnés & ayants droit servis" },
-  { value: "8", label: "Régions militaires couvertes" },
-  { value: "23", label: "Provinces — recensement biométrique" },
-  { value: "5", label: "Banques partenaires (BCC, UBA, Ecobank, CBT…)" },
-];
-
-export function Hero({ period, pensioners }: { period: string; pensioners: number }) {
+export function Hero() {
   const { t } = usePortal();
 
   const shareNative = async () => {
@@ -29,8 +22,8 @@ export function Hero({ period, pensioners }: { period: string; pensioners: numbe
           url: window.location.href,
         });
         return;
-      } catch {
-        /* annulation */
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
       }
     }
     window.open(
@@ -78,9 +71,6 @@ export function Hero({ period, pensioners }: { period: string; pensioners: numbe
             <CalendarDays className="h-6 w-6 shrink-0" strokeWidth={2.2} />
             <span>
               {t("cta_calendar")}
-              <span className="mt-0.5 block text-[0.68rem] font-semibold uppercase tracking-wide opacity-80">
-                Cycle {period}
-              </span>
             </span>
           </a>
           <a
@@ -109,24 +99,6 @@ export function Hero({ period, pensioners }: { period: string; pensioners: numbe
             </span>
           </button>
         </div>
-
-        <dl className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
-          {STATS.map((stat, index) => (
-            <div
-              key={stat.label}
-              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 backdrop-blur-sm"
-            >
-              <dt className="text-lg font-black text-gold-400 sm:text-xl">
-                {index === 0 && pensioners > 0
-                  ? `${new Intl.NumberFormat("fr-FR").format(pensioners)}`
-                  : stat.value}
-              </dt>
-              <dd className="mt-0.5 text-[0.66rem] font-medium leading-tight text-slate-300 sm:text-xs">
-                {stat.label}
-              </dd>
-            </div>
-          ))}
-        </dl>
 
         <div className="flag-lisere mt-6 h-1 w-24 rounded-full" aria-hidden="true" />
       </div>

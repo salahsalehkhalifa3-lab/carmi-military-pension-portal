@@ -1,59 +1,43 @@
-"use client";
-
 import Image from "next/image";
+import type { MilitaryRegion, PayoutCycle, RegionalAgency } from "@/db/schema";
 
-interface Agency {
-  id: string;
-  name: string;
-  city: string;
-  address: string;
-  hours: string;
-  image?: string;
-  type?: string;
-}
+export function Payouts({ available, regions, payouts }: {
+  available: boolean;
+  regions: MilitaryRegion[];
+  payouts: PayoutCycle[];
+}) {
+  const regionNames = new Map(regions.map((region) => [region.code, region.label]));
 
-interface Region {
-  id: string | number;
-  label?: string;
-  name?: string;
-  code: string;
-  city?: string;
-  zone?: string;
-  position?: number;
-}
-
-interface Payout {
-  id: string | number;
-  regionId?: string | number;
-  amount?: number;
-  pensionersCount?: number;
-  status?: string;
-  date?: string;
-}
-
-// 1. COMPOSANT PAYOUTS
-export function Payouts({ period, regions = [], payouts = [] }: { period?: string; regions?: any[]; payouts?: any[] }) {
   return (
-    <section id="payouts" className="py-12 bg-slate-900 text-white border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-emerald-400 mb-4">
-          Campagnes de paiement et distributions régionales {period && `(${period})`}
+    <section id="calendrier" className="scroll-mt-28 border-b border-slate-800 bg-slate-900 py-12 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 className="mb-4 text-2xl font-bold tracking-tight text-emerald-400">
+          Calendrier des paiements par région
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {regions.map((region) => (
-            <div key={region.id} className="p-4 rounded-xl bg-slate-800 border border-slate-700">
-              <h3 className="font-semibold text-white">{region.label || region.name}</h3>
-              <p className="text-xs text-slate-400">Code région: {region.code}</p>
-            </div>
-          ))}
-        </div>
+        {payouts.length ? (
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {payouts.map((payout) => (
+              <li key={payout.id} className="rounded-xl border border-slate-700 bg-slate-800 p-4">
+                <h3 className="font-semibold">{regionNames.get(payout.regionCode) ?? payout.regionCode}</h3>
+                <dl className="mt-2 space-y-1 text-sm text-slate-200">
+                  <div><dt className="inline font-semibold">Période :</dt> <dd className="inline">{payout.period}</dd></div>
+                  <div><dt className="inline font-semibold">Paiement :</dt> <dd className="inline">{payout.payDate}</dd></div>
+                  <div><dt className="inline font-semibold">Ouverture des guichets :</dt> <dd className="inline">{payout.counterOpenFrom}</dd></div>
+                </dl>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-slate-200">
+            {available ? "Aucun calendrier de paiement publié." : "Le calendrier des paiements est actuellement indisponible."}
+          </p>
+        )}
       </div>
     </section>
   );
 }
 
-// 2. COMPOSANT AGENCIES (Uniquement l'image de la paie)
-export function Agencies({ agencies = [] }: { agencies?: any[] }) {
+export function Agencies({ agencies }: { agencies: RegionalAgency[] }) {
   const mobileAgency = {
     id: "mobile-unit",
     name: "Unité Mobile de Paie & Guichet Bancaire",
@@ -65,7 +49,7 @@ export function Agencies({ agencies = [] }: { agencies?: any[] }) {
   };
 
   return (
-    <section id="guichets" className="py-16 bg-slate-900 text-white">
+    <section id="agences" className="scroll-mt-28 py-16 bg-slate-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-emerald-400">
@@ -84,7 +68,6 @@ export function Agencies({ agencies = [] }: { agencies?: any[] }) {
                 alt={mobileAgency.name}
                 fill
                 sizes="(max-width: 1024px) 100vw, 800px"
-                priority
                 className="object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
@@ -108,6 +91,19 @@ export function Agencies({ agencies = [] }: { agencies?: any[] }) {
             </div>
           </div>
         </div>
+        {agencies.length > 0 ? (
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {agencies.map((agency) => (
+              <li key={agency.id} className="rounded-xl border border-slate-700 bg-slate-800 p-4">
+                <h3 className="font-semibold">{agency.name}</h3>
+                <p className="text-sm text-slate-300">{agency.city} · {agency.hours}</p>
+                <p className="mt-1 text-sm text-slate-200">{agency.phone}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-6 text-center text-slate-300">Coordonnées des guichets régionaux actuellement indisponibles.</p>
+        )}
       </div>
     </section>
   );

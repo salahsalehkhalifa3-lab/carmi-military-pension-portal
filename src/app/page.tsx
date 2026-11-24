@@ -1,5 +1,4 @@
-import { getPortalData, sumPayouts } from "@/lib/data";
-import { CURRENT_PERIOD } from "@/db/seed";
+import { getPortalData } from "@/lib/data";
 import { Hero } from "@/components/sections/hero";
 import { Services } from "@/components/sections/services";
 import { Agencies, Payouts } from "@/components/sections/regional";
@@ -11,14 +10,13 @@ import { Contact } from "@/components/sections/contact";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const { regions, payouts, agencies, services, news } = await getPortalData();
-  const totals = sumPayouts(payouts);
+  const { available, regions, payouts, agencies, services, news } = await getPortalData();
 
   return (
     <>
-      <Hero period={CURRENT_PERIOD} pensioners={totals.pensioners} />
+      <Hero />
       <Services services={services} />
-      <Payouts period={CURRENT_PERIOD} regions={regions} payouts={payouts} />
+      <Payouts available={available} regions={regions} payouts={payouts} />
       <Agencies agencies={agencies} />
       <Calculator />
       <News news={news} />

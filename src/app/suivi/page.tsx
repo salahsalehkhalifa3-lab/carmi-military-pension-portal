@@ -28,13 +28,13 @@ export default function SuiviPage() {
             pour connaître l&apos;état de votre dossier.
           </p>
           <div className="mt-5 flex flex-col gap-2 sm:flex-row">
-            <a
+            <Link
               href="/#calendrier"
               className="tap-target inline-flex items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950"
             >
               <CalendarDays className="h-5 w-5" strokeWidth={2.2} />
               Calendrier de paiement
-            </a>
+            </Link>
             <a
               href={`tel:${CONTACT.helpline}`}
               className="tap-target inline-flex items-center justify-center gap-2 rounded-xl border border-gold-500/50 px-4 text-sm font-bold text-gold-300"

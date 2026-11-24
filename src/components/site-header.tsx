@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Landmark,
@@ -16,11 +16,14 @@ import {
   X,
 } from "lucide-react";
 import { CONTACT, NAV_LINKS, SITE_SHORT, SOCIALS } from "@/lib/institution";
+import { useDialogKeyboard } from "@/lib/use-dialog-keyboard";
 import { usePortal } from "@/lib/i18n";
 
 export function SiteHeader() {
   const { t, lang, toggleLang, theme, toggleTheme } = usePortal();
   const [open, setOpen] = useState(false);
+  const closeMenu = useCallback(() => setOpen(false), []);
+  const menuRef = useDialogKeyboard(open, closeMenu);
 
   useEffect(() => {
     if (!open) return;
@@ -29,13 +32,10 @@ export function SiteHeader() {
     const closeOnDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     desktop.addEventListener("change", closeOnDesktop);
 
     return () => {
       desktop.removeEventListener("change", closeOnDesktop);
-      document.body.style.overflow = previousOverflow;
     };
   }, [open]);
 
@@ -154,10 +154,12 @@ export function SiteHeader() {
             <button
               type="button"
               aria-label={t("close")}
+              tabIndex={-1}
               className="absolute inset-0 bg-army-950/70 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
+              onClick={closeMenu}
             />
-            <motion.aside
+            <motion.div
+              ref={menuRef}
               className="absolute end-0 top-0 flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-army-900 text-white shadow-2xl"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -175,7 +177,7 @@ export function SiteHeader() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setOpen(false)}
+                  onClick={closeMenu}
                   className="tap-target inline-flex items-center justify-center rounded-xl border border-white/20 px-3"
                   aria-label={t("close")}
                 >
@@ -188,7 +190,7 @@ export function SiteHeader() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={() => setOpen(false)}
+                    onClick={closeMenu}
                     className="tap-target flex items-center justify-between rounded-xl px-4 text-base font-bold text-slate-100 transition hover:bg-white/10 hover:text-gold-300"
                   >
                     {t(link.key, link.label)}
@@ -226,7 +228,7 @@ export function SiteHeader() {
                   {CONTACT.address}
                 </p>
               </div>
-            </motion.aside>
+            </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>

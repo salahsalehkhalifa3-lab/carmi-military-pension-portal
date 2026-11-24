@@ -23,9 +23,19 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+
+    const desktop = window.matchMedia("(min-width: 80rem)");
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    desktop.addEventListener("change", closeOnDesktop);
+
     return () => {
-      document.body.style.overflow = "";
+      desktop.removeEventListener("change", closeOnDesktop);
+      document.body.style.overflow = previousOverflow;
     };
   }, [open]);
 
@@ -38,14 +48,14 @@ export function SiteHeader() {
         </div>
 
         <div className="border-b border-white/10 bg-army-900/98 backdrop-blur">
-          <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-3 sm:h-[4.5rem] sm:px-5">
+          <div className="mx-auto flex min-h-16 max-w-7xl items-center gap-2 px-3 py-2 sm:min-h-[4.5rem] sm:px-5 2xl:max-w-[90rem]">
             <Link
               href="/"
               className="flex min-w-0 flex-1 items-center gap-2.5"
               aria-label={`${SITE_SHORT} — Accueil`}
             >
               <Image
-                src="/images/carmi-logo.png"
+                src="/image/logocarmi.jpg"
                 alt="Sceau officiel de la Caisse de Retraite des Militaires"
                 width={56}
                 height={56}
@@ -53,10 +63,10 @@ export function SiteHeader() {
                 className="h-11 w-11 shrink-0 rounded-lg bg-white object-contain p-0.5 sm:h-12 sm:w-12"
               />
               <span className="min-w-0">
-                <span className="block truncate text-base font-black leading-none tracking-tight text-white sm:text-xl">
+                <span className="block whitespace-nowrap text-base font-black leading-none tracking-tight text-white sm:text-xl">
                   C.A.R.M.I.
                 </span>
-                <span className="mt-1 block truncate text-[0.62rem] font-medium uppercase leading-tight tracking-[0.09em] text-gold-300 sm:text-[0.7rem]">
+                <span className="mt-1 block text-[0.62rem] font-medium uppercase leading-tight tracking-[0.09em] text-gold-300 sm:text-[0.7rem]">
                   Caisse de Retraite des Militaires
                 </span>
               </span>
@@ -64,13 +74,13 @@ export function SiteHeader() {
 
             <nav
               aria-label="Navigation principale"
-              className="hidden items-center gap-1 lg:flex"
+              className="hidden items-center gap-1 xl:flex"
             >
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-gold-300"
+                  className="rounded-lg px-2 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-gold-300"
                 >
                   {t(link.key, link.label)}
                 </Link>
@@ -80,7 +90,7 @@ export function SiteHeader() {
             <div className="flex items-center gap-1.5">
               <a
                 href={`tel:${CONTACT.phone}`}
-                className="tap-target inline-flex items-center justify-center rounded-xl bg-gold-500 px-3 text-army-950 transition hover:bg-gold-400 lg:hidden"
+                className="tap-target hidden items-center justify-center rounded-xl bg-gold-500 px-3 text-army-950 transition hover:bg-gold-400 sm:inline-flex xl:hidden"
                 aria-label={`Appeler la CARMI au ${CONTACT.phoneDisplay}`}
               >
                 <Phone className="h-5 w-5" strokeWidth={2.1} />
@@ -95,16 +105,16 @@ export function SiteHeader() {
                 aria-label="Assistance WhatsApp CARMI"
               >
                 <MessageCircle className="h-5 w-5" strokeWidth={2.1} />
-                <span className="hidden xl:inline">{t("helpdesk")}</span>
+                <span className="hidden 2xl:inline">{t("helpdesk")}</span>
               </a>
               <button
                 type="button"
                 onClick={toggleLang}
-                className="tap-target inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3 text-xs font-bold text-white transition hover:bg-white/10"
+                className="tap-target inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-2 text-xs font-bold text-white transition hover:bg-white/10"
                 aria-label={lang === "fr" ? "التبديل إلى العربية" : "Switch to French"}
               >
                 <Languages className="h-4 w-4" strokeWidth={2} />
-                {t("lang_toggle")}
+                <span className="hidden sm:inline">{t("lang_toggle")}</span>
               </button>
               <button
                 type="button"
@@ -121,7 +131,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="tap-target inline-flex items-center justify-center rounded-xl bg-white/10 px-3 text-white transition hover:bg-white/20 lg:hidden"
+                className="tap-target inline-flex items-center justify-center rounded-xl bg-white/10 px-3 text-white transition hover:bg-white/20 xl:hidden"
                 aria-label={t("menu")}
                 aria-expanded={open}
               >
@@ -135,7 +145,7 @@ export function SiteHeader() {
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-[60] lg:hidden"
+            className="fixed inset-0 z-[60] xl:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

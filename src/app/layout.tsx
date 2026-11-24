@@ -35,8 +35,8 @@ export const metadata: Metadata = {
     siteName: "CARMI Tchad",
   },
   icons: {
-    icon: [{ url: "/images/carmi-logo.png", type: "image/png" }],
-    apple: [{ url: "/images/carmi-logo.png" }],
+    icon: [{ url: "/image/logocarmi.jpg", type: "image/jpeg" }],
+    apple: [{ url: "/image/logocarmi.jpg", type: "image/jpeg" }],
   },
 };
 

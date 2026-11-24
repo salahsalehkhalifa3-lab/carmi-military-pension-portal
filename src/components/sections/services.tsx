@@ -79,7 +79,7 @@ export function Services({ services }: { services: PensionService[] }) {
                   <p className="text-[0.85rem] leading-relaxed text-slate-600 dark:text-slate-300">
                     {service.tagline}
                   </p>
-                  <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-[0.72rem] font-bold uppercase tracking-wide text-gold-600 group-hover:text-gold-500 dark:text-gold-300">
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-[0.72rem] font-bold uppercase tracking-wide text-gold-600 group-hover:text-gold-700 dark:text-gold-300 dark:group-hover:text-gold-300">
                     Procédure & pièces exigées
                   </span>
                 </button>
@@ -177,7 +177,7 @@ export function Services({ services }: { services: PensionService[] }) {
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-xl border border-slate-200 p-3 dark:border-white/10">
                   <h4 className="inline-flex items-center gap-2 text-[0.8rem] font-black uppercase tracking-wide text-army-900 dark:text-white">
-                    <FileText className="h-4 w-4 text-gold-600" strokeWidth={2.2} />
+                    <FileText className="h-4 w-4 text-gold-600 dark:text-gold-300" strokeWidth={2.2} />
                     Pièces exigées
                   </h4>
                   <ul className="mt-2 space-y-1.5">
@@ -194,7 +194,7 @@ export function Services({ services }: { services: PensionService[] }) {
                 </div>
                 <div className="rounded-xl border border-slate-200 p-3 dark:border-white/10">
                   <h4 className="inline-flex items-center gap-2 text-[0.8rem] font-black uppercase tracking-wide text-army-900 dark:text-white">
-                    <ListChecks className="h-4 w-4 text-gold-600" strokeWidth={2.2} />
+                    <ListChecks className="h-4 w-4 text-gold-600 dark:text-gold-300" strokeWidth={2.2} />
                     Étapes de la procédure
                   </h4>
                   <ol className="mt-2 space-y-1.5">

@@ -51,7 +51,7 @@ export function Faq() {
                     {item.q}
                   </span>
                   <ChevronDown
-                    className={`mt-0.5 h-5 w-5 shrink-0 text-gold-600 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    className={`mt-0.5 h-5 w-5 shrink-0 text-gold-600 transition-transform dark:text-gold-300 ${isOpen ? "rotate-180" : ""}`}
                     strokeWidth={2.2}
                   />
                 </button>

@@ -263,7 +263,7 @@ export function Contact({
                 href={`tel:${CONTACT.phone}`}
                 className="tap-target flex items-center gap-3 rounded-2xl border border-slate-200 bg-tactical-50 px-4 py-3 dark:border-white/10 dark:bg-white/5"
               >
-                <Phone className="h-6 w-6 shrink-0 text-gold-600" strokeWidth={2.2} />
+                <Phone className="h-6 w-6 shrink-0 text-gold-600 dark:text-gold-300" strokeWidth={2.2} />
                 <span>
                   <span className="block text-[0.68rem] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     Standard Direction Générale
@@ -295,7 +295,7 @@ export function Contact({
                 )}`}
                 className="tap-target flex items-center gap-3 rounded-2xl border border-slate-200 bg-tactical-50 px-4 py-3 dark:border-white/10 dark:bg-white/5"
               >
-                <Mail className="h-6 w-6 shrink-0 text-gold-600" strokeWidth={2.2} />
+                <Mail className="h-6 w-6 shrink-0 text-gold-600 dark:text-gold-300" strokeWidth={2.2} />
                 <span>
                   <span className="block text-[0.68rem] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                     Direction des Pensions
@@ -308,15 +308,15 @@ export function Contact({
 
               <div className="rounded-2xl border border-slate-200 bg-tactical-50 p-4 dark:border-white/10 dark:bg-white/5">
                 <p className="inline-flex items-center gap-2 text-[0.72rem] font-black uppercase tracking-wide text-army-900 dark:text-white">
-                  <Landmark className="h-4 w-4 text-gold-600" strokeWidth={2.2} />
+                  <Landmark className="h-4 w-4 text-gold-600 dark:text-gold-300" strokeWidth={2.2} />
                   Siège de la Caisse
                 </p>
                 <p className="mt-2 inline-flex items-start gap-2 text-[0.82rem] leading-snug text-slate-600 dark:text-slate-300">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" strokeWidth={2.1} />
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-600 dark:text-gold-300" strokeWidth={2.1} />
                   {CONTACT.address}
                 </p>
                 <p className="mt-2 inline-flex items-start gap-2 text-[0.82rem] leading-snug text-slate-600 dark:text-slate-300">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" strokeWidth={2.1} />
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold-600 dark:text-gold-300" strokeWidth={2.1} />
                   {CONTACT.hours}
                 </p>
               </div>

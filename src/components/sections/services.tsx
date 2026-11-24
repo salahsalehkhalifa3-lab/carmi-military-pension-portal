@@ -10,16 +10,13 @@ import {
   FileText,
   Flame,
   ListChecks,
-  MessageCircle,
   Users,
   X,
   type LucideIcon,
 } from "lucide-react";
-import { CONTACT } from "@/lib/institution";
 import type { PensionService } from "@/db/schema";
 import { useDialogKeyboard } from "@/lib/use-dialog-keyboard";
 import { IconBadge, Reveal, SectionHeading } from "@/components/ui";
-import { ShareRow } from "@/components/share";
 
 const ICONS: Record<string, LucideIcon> = {
   award: Award,
@@ -97,20 +94,10 @@ export function Services({ services }: { services: PensionService[] }) {
                   Guide de bancarisation des militaires
                 </h3>
                 <p className="mt-2 text-[0.85rem] leading-relaxed text-slate-200">
-                  Ouvrez votre compte gratuitement, recevez votre solde par virement et
-                  soyez alerté par SMS à chaque décaissement. Établissements partenaires :
-                  BCC, UBA Tchad, Ecobank, CBT et Aird Money.
+                  Exemple de rubrique pour expliquer les étapes de bancarisation.
+                  Les conditions et les partenaires pourront être renseignés après validation.
                 </p>
               </div>
-              <a
-                href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent("Bonjour CARMI, je souhaite ouvrir un compte bancaire militaire.")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tap-target inline-flex items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950 transition hover:bg-gold-400"
-              >
-                <MessageCircle className="h-5 w-5" strokeWidth={2.2} />
-                Être accompagné
-              </a>
             </div>
           </Reveal>
         </div>
@@ -213,19 +200,6 @@ export function Services({ services }: { services: PensionService[] }) {
                 </div>
               </div>
 
-              <div className="mt-5 rounded-xl border border-gold-500/30 bg-gold-500/10 p-3">
-                <p className="text-[0.7rem] font-bold uppercase tracking-wide text-gold-700 dark:text-gold-300">
-                  Partager cette procédure avec vos camarades
-                </p>
-                <div className="mt-2">
-                  <ShareRow
-                    title={active.title}
-                    path={`/#service-${active.slug}`}
-                    target={`service-${active.slug}`}
-                    label="Envoyer"
-                  />
-                </div>
-              </div>
             </motion.div>
           </motion.div>
         ) : null}

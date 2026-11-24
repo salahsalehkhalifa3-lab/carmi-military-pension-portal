@@ -3,36 +3,21 @@ import type { ReactNode } from "react";
 import { PortalProvider } from "@/lib/i18n";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { StickyMobileDock } from "@/components/share";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default:
-      "CARMI — Caisse de Retraite des Militaires | République du Tchad",
-    template: "%s | CARMI Tchad",
+    default: "CARMI | Démonstration PROSPERA Tchad",
+    template: "%s | Démonstration CARMI",
   },
-  description:
-    "Portail officiel de la Caisse de Retraite des Militaires (CARMI) du Tchad : calendrier de paiement des soldes de retraite, pension d'invalidité, ayants droit, contrôle de vie biométrique et bancarisation militaire.",
-  keywords: [
-    "CARMI",
-    "Caisse de Retraite des Militaires",
-    "Tchad",
-    "pension militaire",
-    "ANT",
-    "anciens combattants",
-    "bancarisation",
-    "N'Djamena",
-  ],
-  applicationName: "CARMI Tchad",
-  authors: [{ name: "C.A.R.M.I. — République du Tchad" }],
+  description: "Proposition de portail institutionnel réalisée par PROSPERA Tchad, soumise à validation de la CARMI.",
+  robots: { index: false, follow: false },
+  authors: [{ name: "PROSPERA Tchad", url: "https://prosperachad.site" }],
   openGraph: {
-    title: "CARMI — Caisse de Retraite des Militaires (Tchad)",
-    description:
-      "Honneur, Dignité et Protection pour les Combattants de la Nation : pensions, invalidité, ayants droit et bancarisation militaire.",
+    title: "CARMI | Démonstration PROSPERA Tchad",
+    description: "Démonstration commerciale non officielle à partir de données fictives.",
     type: "website",
     locale: "fr_TD",
-    siteName: "CARMI Tchad",
   },
   icons: {
     icon: [{ url: "/image/logocarmi.jpg", type: "image/jpeg" }],
@@ -64,7 +49,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SiteHeader />
           <main id="contenu">{children}</main>
           <SiteFooter />
-          <StickyMobileDock />
         </PortalProvider>
       </body>
     </html>

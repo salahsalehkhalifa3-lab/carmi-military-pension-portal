@@ -1,32 +1,5 @@
 export const SITE_NAME = "Caisse de Retraite des Militaires";
 export const SITE_SHORT = "C.A.R.M.I.";
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://carmi.td";
-
-export const CONTACT = {
-  phone: "+23522514420",
-  phoneDisplay: "+235 22 51 44 20",
-  helpline: "+23566001122",
-  helplineDisplay: "+235 66 00 11 22",
-  whatsapp: "23566001122",
-  whatsappDisplay: "+235 66 00 11 22",
-  email: "direction.generale@carmi.td",
-  pensionsEmail: "pensions@carmi.td",
-  address:
-    "Avenue Charles de Gaulle, Quartier Klemat — N'Djamena, République du Tchad",
-  hours: "Lun–Ven 07h30–15h30 · Samedi 08h00–12h00",
-};
-
-export const SOCIALS = {
-  whatsappChannel:
-    "https://whatsapp.com/channel/0029VaCARMIOfficielTd",
-  facebook: "https://www.facebook.com/CARMI.Tchad",
-  x: "https://x.com/CARMI_Td",
-  youtube: "https://www.youtube.com/@CARMITchad",
-  linkedin: "https://www.linkedin.com/company/carmi-tchad",
-  telegram: "https://t.me/CARMI_Tchad",
-};
-
 export const NAV_LINKS = [
   { href: "/#prestations", key: "nav_services" as const, label: "Prestations" },
   { href: "/#calendrier", key: "nav_calendar" as const, label: "Calendrier" },

@@ -1,35 +1,10 @@
 "use client";
 
-import { CalendarDays, CreditCard, Share2, ShieldCheck } from "lucide-react";
+import { CalendarDays, CreditCard, ShieldCheck } from "lucide-react";
 import { usePortal } from "@/lib/i18n";
-import { trackShare } from "@/lib/share";
 
 export function Hero() {
   const { t } = usePortal();
-
-  const shareNative = async () => {
-    trackShare("native", "page");
-    const message =
-      "Infos officielles CARMI : calendrier de paiement des soldes de retraite, bancarisation et contrôle de vie.";
-    const nav = typeof navigator !== "undefined" ? navigator : undefined;
-    if (nav && "share" in nav) {
-      try {
-        await nav.share({
-          title: "C.A.R.M.I. — Caisse de Retraite des Militaires",
-          text: message,
-          url: window.location.href,
-        });
-        return;
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-      }
-    }
-    window.open(
-      `https://wa.me/?text=${encodeURIComponent(`${message} ${window.location.href}`)}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
-  };
 
   return (
     <section className="relative isolate overflow-hidden bg-army-950 text-white">
@@ -53,7 +28,7 @@ export function Hero() {
           {t("hero_sub")}
         </p>
 
-        <div className="mt-5 grid gap-2.5 sm:grid-cols-3">
+        <div className="mt-5 grid gap-2.5 sm:grid-cols-2">
           <a
             href="#calendrier"
             className="tap-target flex items-center gap-3 rounded-xl bg-gold-500 px-4 py-3 text-start text-sm font-black leading-tight text-army-950 transition hover:bg-gold-400 active:scale-[0.99]"
@@ -70,24 +45,8 @@ export function Hero() {
             <CreditCard className="h-6 w-6 shrink-0" strokeWidth={2.2} />
             <span>
               {t("cta_bank")}
-              <span className="mt-0.5 block text-[0.68rem] font-semibold uppercase tracking-wide opacity-70">
-                BCC · UBA · Ecobank · CBT
-              </span>
             </span>
           </a>
-          <button
-            type="button"
-            onClick={shareNative}
-            className="tap-target flex items-center gap-3 rounded-xl border border-gold-500/50 bg-army-900/80 px-4 py-3 text-start text-sm font-black leading-tight text-gold-300 transition hover:bg-army-900 active:scale-[0.99]"
-          >
-            <Share2 className="h-6 w-6 shrink-0" strokeWidth={2.2} />
-            <span>
-              {t("cta_share")}
-              <span className="mt-0.5 block text-[0.68rem] font-semibold uppercase tracking-wide opacity-80">
-                WhatsApp · Facebook · Telegram · X
-              </span>
-            </span>
-          </button>
         </div>
 
         <div className="flag-lisere mt-6 h-1 w-24 rounded-full" aria-hidden="true" />

@@ -5,13 +5,10 @@ import {
   AlarmClock,
   AlarmClockOff,
   Info,
-  Megaphone,
-  Share2,
   TriangleAlert,
 } from "lucide-react";
 import type { Announcement } from "@/db/schema";
 import { Reveal, SectionHeading } from "@/components/ui";
-import { OfficialChannels, ShareRow } from "@/components/share";
 
 const SEVERITY: Record<
   string,
@@ -23,7 +20,7 @@ const SEVERITY: Record<
     icon: AlarmClockOff,
   },
   alerte: {
-    label: "Alerte officielle",
+    label: "Alerte de démonstration",
     className: "border-gold-500/50 bg-gold-500/10 text-gold-700 dark:text-gold-300",
     icon: TriangleAlert,
   },
@@ -44,34 +41,10 @@ export function News({ news }: { news: Announcement[] }) {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
-          eyebrow="Communiqués officiels"
+          eyebrow="Données fictives"
           title="Annonces et communiqués"
-          intro="Diffusez les dates de paiement et les communiqués de la Direction Générale aux associations de vétérans, aux familles et aux groupes WhatsApp de garnison en un seul geste."
+          intro="Exemple de rubrique pour présenter les annonces et communiqués."
         />
-
-        <Reveal className="mt-6">
-          <div className="rounded-2xl border border-army-900/15 bg-army-900 p-4 text-white sm:p-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="inline-flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-wide text-gold-300">
-                  <Share2 className="h-4 w-4" strokeWidth={2.2} />
-                  Partager le portail officiel CARMI
-                </p>
-                <p className="mt-1 text-[0.85rem] leading-snug text-slate-200">
-                  Calendrier des soldes, procédures et contrôle de vie — diffusez
-                  l&apos;information fiable et combattez les fausses annonces.
-                </p>
-              </div>
-              <ShareRow title="Portail officiel CARMI" target="page" label="Partager" />
-            </div>
-            <div className="mt-4 border-t border-white/10 pt-4">
-              <p className="mb-2 text-[0.7rem] font-bold uppercase tracking-wide text-gold-300">
-                Chaînes officielles de la CARMI
-              </p>
-              <OfficialChannels />
-            </div>
-          </div>
-        </Reveal>
 
         {news.length === 0 && <p className="mt-4 text-slate-600 dark:text-slate-300">Aucun communiqué à afficher.</p>}
         <div className="mt-4 space-y-3">
@@ -99,9 +72,6 @@ export function News({ news }: { news: Announcement[] }) {
                         <AlarmClock className="h-3.5 w-3.5" strokeWidth={2.1} />
                         {item.publishedAt}
                       </span>
-                      <span className="ms-auto text-[0.65rem] font-bold text-gold-600 dark:text-gold-300">
-                        {new Intl.NumberFormat("fr-FR").format(item.shareCount)} partages
-                      </span>
                     </div>
                     <h3 className="mt-2 text-[1rem] font-black leading-tight text-army-900 sm:text-lg dark:text-white">
                       {item.title}
@@ -113,18 +83,9 @@ export function News({ news }: { news: Announcement[] }) {
 
                   {isOpen ? (
                     <div className="border-t border-slate-200 px-4 py-3 dark:border-white/10">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <span className="inline-flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                          <Megaphone className="h-4 w-4" strokeWidth={2.1} />
-                          Diffuser ce communiqué
-                        </span>
-                        <ShareRow
-                          title={item.title}
-                          path={`/#annonce-${item.slug}`}
-                          target={`annonce-${item.slug}`}
-                          label="WhatsApp"
-                        />
-                      </div>
+                      <p className="text-sm text-slate-600 dark:text-slate-300">
+                        Cet exemple sert à illustrer la présentation des communiqués.
+                      </p>
                     </div>
                   ) : null}
                 </article>

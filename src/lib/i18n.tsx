@@ -15,6 +15,10 @@ export type Lang = "fr" | "ar";
 type Dict = Record<string, { fr: string; ar: string }>;
 
 const DICT: Dict = {
+  demo: {
+    fr: "Version de démonstration — Proposition de portail institutionnel réalisée par PROSPERA Tchad, soumise à validation de la CARMI.",
+    ar: "نسخة تجريبية — مقترح بوابة مؤسسية من PROSPERA Tchad، يخضع لاعتماد صندوق تقاعد العسكريين.",
+  },
   ribbon: {
     fr: "RÉPUBLIQUE DU TCHAD | C.A.R.M.I.",
     ar: "جمهورية تشاد | صندوق تقاعد العسكريين",
@@ -35,8 +39,8 @@ const DICT: Dict = {
     ar: "شرف وكرامة وحماية ل مقاتلي الأمة.",
   },
   hero_sub: {
-    fr: "La Caisse de Retraite des Militaires (CARMI) garantit la gestion moderne, la bancarisation et le paiement sécurisé des soldes de retraite de nos héros nationaux.",
-    ar: "يضمن صندوق تقاعد العسكريين الإدارة الحديثة والخدمات المصرفية والدفع الآمن لمعاشات أبطالنا الوطنيين.",
+    fr: "Découvrez une proposition de portail pour la Caisse de Retraite des Militaires. Les parcours sont illustrés par des données fictives.",
+    ar: "اكتشف مقترح بوابة لصندوق تقاعد العسكريين. تعرض النسخة التجريبية أمثلة ببيانات افتراضية.",
   },
   cta_calendar: { fr: "Calendrier des Solde & Paiements", ar: "تقويم الرواتب" },
   cta_bank: { fr: "Guide de Bancarisation Militaires", ar: "دليل الخدمات المصرفية" },

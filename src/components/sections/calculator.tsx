@@ -3,11 +3,8 @@
 import { useMemo, useState } from "react";
 import {
   BadgeCheck,
-  Calculator as CalculatorIcon,
   CircleAlert,
   FileCheck2,
-  HandCoins,
-  LoaderCircle,
 } from "lucide-react";
 import {
   computeEstimate,
@@ -25,41 +22,10 @@ export function Calculator() {
   const [years, setYears] = useState<number>(22);
   const [disabilityRate, setDisability] = useState<number>(0);
   const [survivor, setSurvivor] = useState<"non" | "veuve" | "orphelin">("non");
-  const [saving, setSaving] = useState(false);
-  const [savedRef, setSavedRef] = useState<string | null>(null);
-  const [saveError, setSaveError] = useState(false);
-
-  function resetSaveFeedback() {
-    setSavedRef(null);
-    setSaveError(false);
-  }
-
   const result: EstimateResult = useMemo(
     () => computeEstimate({ rank, unit, years, disabilityRate, survivor }),
     [rank, unit, years, disabilityRate, survivor],
   );
-
-  async function persist() {
-    if (saving) return;
-    resetSaveFeedback();
-    setSaving(true);
-    try {
-      const res = await fetch("/api/estimate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rank, unit, years, disabilityRate, survivor }),
-      });
-      const data = (await res.json()) as {
-        estimate?: { reference: string };
-      };
-      if (!res.ok || !data.estimate?.reference) throw new Error("Enregistrement indisponible");
-      setSavedRef(data.estimate.reference);
-    } catch {
-      setSaveError(true);
-    } finally {
-      setSaving(false);
-    }
-  }
 
   return (
     <section
@@ -70,13 +36,13 @@ export function Calculator() {
         <SectionHeading
           eyebrow="Simulateur & Éligibilité"
           title="Estimez votre solde de retraite et vos pièces à fournir"
-          intro="Réglez votre grade, vos années de service et votre unité (ANT, Gendarmerie, Police, GNNT) : le simulateur calcule un taux de liquidation indicatif et génère la liste des pièces exigées par la Direction des Pensions."
+          intro="Utilisez des paramètres fictifs. Le calcul reste dans le navigateur et les barèmes et justificatifs illustratifs sont soumis à validation."
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-5">
           <Reveal className="lg:col-span-3">
             <div className="rounded-2xl border border-slate-200 p-4 sm:p-5 dark:border-white/10">
-              <fieldset disabled={saving} onChange={resetSaveFeedback} className="grid min-w-0 gap-4 sm:grid-cols-2">
+              <fieldset className="grid min-w-0 gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className="text-[0.75rem] font-bold uppercase tracking-wide text-army-900 dark:text-slate-200">
                     Grade / index de solde
@@ -138,8 +104,7 @@ export function Calculator() {
                         key={rate}
                         type="button"
                         onClick={() => {
-                          resetSaveFeedback();
-                          setDisability(rate);
+                                                setDisability(rate);
                         }}
                         aria-pressed={disabilityRate === rate}
                         className={`tap-target min-w-[3rem] rounded-xl border px-2 text-[0.8rem] font-bold transition ${
@@ -170,10 +135,8 @@ export function Calculator() {
                   max={45}
                   step={1}
                   value={years}
-                  disabled={saving}
                   onChange={(e) => {
-                    resetSaveFeedback();
-                    setYears(Number(e.target.value));
+                                    setYears(Number(e.target.value));
                   }}
                   aria-label="Années de service retenues"
                   className="mt-3 h-11 w-full accent-gold-500"
@@ -185,29 +148,6 @@ export function Calculator() {
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={persist}
-                disabled={saving}
-                className="tap-target mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950 transition hover:bg-gold-400"
-              >
-                {saving ? (
-                  <LoaderCircle className="h-5 w-5 animate-spin" strokeWidth={2.2} />
-                ) : (
-                  <CalculatorIcon className="h-5 w-5" strokeWidth={2.2} />
-                )}
-                Enregistrer ma simulation
-              </button>
-              {saveError && (
-                <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
-                  Enregistrement indisponible. Le calcul indicatif reste affiché.
-                </p>
-              )}
-              {savedRef ? (
-                <p role="status" className="mt-2 text-center text-[0.72rem] font-semibold text-emerald-600 dark:text-emerald-400">
-                  Simulation enregistrée — référence {savedRef}
-                </p>
-              ) : null}
             </div>
           </Reveal>
 
@@ -223,7 +163,7 @@ export function Calculator() {
                 <>
                   <p className="inline-flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-wide text-gold-300">
                     <BadgeCheck className="h-4 w-4" strokeWidth={2.2} />
-                    Droit à pension estimé
+                    Exemple de résultat indicatif
                   </p>
                   <p className="mt-3 text-[0.72rem] font-semibold uppercase tracking-wide text-slate-300">
                     Solde mensuelle indicative
@@ -239,7 +179,7 @@ export function Calculator() {
                 <>
                   <p className="inline-flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-wide text-flag-red">
                     <CircleAlert className="h-4 w-4" strokeWidth={2.2} />
-                    Seuil de 15 ans non atteint
+                    Seuil illustratif de 15 ans non atteint
                   </p>
                   <p className="mt-3 text-[0.9rem] font-bold leading-snug">
                     Votre décompte d&apos;annuités est insuffisant pour la liquidation
@@ -276,21 +216,6 @@ export function Calculator() {
                 </ul>
               </div>
 
-              <div className="mt-auto flex flex-col gap-2 pt-4 sm:flex-row">
-                <a
-                  href="#contact"
-                  className="tap-target inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-[0.8rem] font-black text-army-950"
-                >
-                  <HandCoins className="h-4 w-4" strokeWidth={2.2} />
-                  Déposer mon dossier
-                </a>
-                <a
-                  href="/suivi"
-                  className="tap-target inline-flex flex-1 items-center justify-center rounded-xl border border-white/30 px-4 text-[0.8rem] font-bold text-white"
-                >
-                  Suivi par matricule
-                </a>
-              </div>
             </div>
           </Reveal>
         </div>

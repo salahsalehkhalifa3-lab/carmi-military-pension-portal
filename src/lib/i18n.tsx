@@ -6,7 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -60,35 +60,72 @@ type LangContextValue = {
 
 const LangContext = createContext<LangContextValue | null>(null);
 
-export function PortalProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("fr");
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+type Theme = LangContextValue["theme"];
 
-  useEffect(() => {
-    const storedLang = window.localStorage.getItem("carmi-lang");
-    const storedTheme = window.localStorage.getItem("carmi-theme");
-    if (storedLang === "ar" || storedLang === "fr") setLang(storedLang);
-    if (storedTheme === "dark" || storedTheme === "light") setTheme(storedTheme);
-    else if (
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setTheme("dark");
-    }
-  }, []);
+let languageOverride: Lang | undefined;
+let themeOverride: Theme | undefined;
+
+function readPreference(key: string) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writePreference(key: string, value: string) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    // A session override remains available when storage is blocked.
+  }
+  window.dispatchEvent(new Event("carmi-preferences"));
+}
+
+function subscribeToPreferences(onChange: () => void) {
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+  window.addEventListener("carmi-preferences", onChange);
+  window.addEventListener("storage", onChange);
+  systemTheme.addEventListener("change", onChange);
+  return () => {
+    window.removeEventListener("carmi-preferences", onChange);
+    window.removeEventListener("storage", onChange);
+    systemTheme.removeEventListener("change", onChange);
+  };
+}
+
+function getLanguage(): Lang {
+  return languageOverride ?? (readPreference("carmi-lang") === "ar" ? "ar" : "fr");
+}
+
+function getTheme(): Theme {
+  if (themeOverride) return themeOverride;
+  const stored = readPreference("carmi-theme");
+  if (stored === "light" || stored === "dark") return stored;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function toggleLang() {
+  languageOverride = getLanguage() === "fr" ? "ar" : "fr";
+  writePreference("carmi-lang", languageOverride);
+}
+
+function toggleTheme() {
+  themeOverride = getTheme() === "light" ? "dark" : "light";
+  writePreference("carmi-theme", themeOverride);
+}
+
+export function PortalProvider({ children }: { children: ReactNode }) {
+  const lang = useSyncExternalStore(subscribeToPreferences, getLanguage, () => "fr" as const);
+  const theme = useSyncExternalStore(subscribeToPreferences, getTheme, () => "light" as const);
 
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
     root.style.colorScheme = theme;
-    window.localStorage.setItem("carmi-theme", theme);
-  }, [theme]);
-
-  useEffect(() => {
-    const root = document.documentElement;
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
-    window.localStorage.setItem("carmi-lang", lang);
-  }, [lang]);
+  }, [lang, theme]);
 
   const t = useCallback(
     (key: keyof typeof DICT | string, fallback?: string) => {
@@ -105,8 +142,8 @@ export function PortalProvider({ children }: { children: ReactNode }) {
       dir: lang === "ar" ? "rtl" : "ltr",
       theme,
       t,
-      toggleLang: () => setLang((prev) => (prev === "fr" ? "ar" : "fr")),
-      toggleTheme: () => setTheme((prev) => (prev === "light" ? "dark" : "light")),
+      toggleLang,
+      toggleTheme,
     }),
     [lang, t, theme],
   );

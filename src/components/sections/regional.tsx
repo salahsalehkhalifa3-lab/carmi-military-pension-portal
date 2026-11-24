@@ -72,7 +72,7 @@ export function Agencies({ agencies = [] }: { agencies?: any[] }) {
             Guichets CARMI et unités mobiles de paie
           </h2>
           <p className="mt-4 text-slate-300 max-w-2xl mx-auto">
-            Coordonnées des antennes régionales, horaires d'ouverture des guichets et passages des colonnes mobiles pour les garnisons éloignées.
+            Coordonnées des antennes régionales, horaires d&apos;ouverture des guichets et passages des colonnes mobiles pour les garnisons éloignées.
           </p>
         </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   BadgeCheck,
   Calculator as CalculatorIcon,
@@ -27,17 +27,21 @@ export function Calculator() {
   const [survivor, setSurvivor] = useState<"non" | "veuve" | "orphelin">("non");
   const [saving, setSaving] = useState(false);
   const [savedRef, setSavedRef] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState(false);
+
+  function resetSaveFeedback() {
+    setSavedRef(null);
+    setSaveError(false);
+  }
 
   const result: EstimateResult = useMemo(
     () => computeEstimate({ rank, unit, years, disabilityRate, survivor }),
     [rank, unit, years, disabilityRate, survivor],
   );
 
-  useEffect(() => {
-    setSavedRef(null);
-  }, [rank, unit, years, disabilityRate, survivor]);
-
   async function persist() {
+    if (saving) return;
+    resetSaveFeedback();
     setSaving(true);
     try {
       const res = await fetch("/api/estimate", {
@@ -48,9 +52,10 @@ export function Calculator() {
       const data = (await res.json()) as {
         estimate?: { reference: string };
       };
-      setSavedRef(data.estimate?.reference ?? result.reference);
+      if (!res.ok || !data.estimate?.reference) throw new Error("Enregistrement indisponible");
+      setSavedRef(data.estimate.reference);
     } catch {
-      setSavedRef(result.reference);
+      setSaveError(true);
     } finally {
       setSaving(false);
     }
@@ -71,7 +76,7 @@ export function Calculator() {
         <div className="mt-6 grid gap-4 lg:grid-cols-5">
           <Reveal className="lg:col-span-3">
             <div className="rounded-2xl border border-slate-200 p-4 sm:p-5 dark:border-white/10">
-              <div className="grid gap-4 sm:grid-cols-2">
+              <fieldset disabled={saving} onChange={resetSaveFeedback} className="grid min-w-0 gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className="text-[0.75rem] font-bold uppercase tracking-wide text-army-900 dark:text-slate-200">
                     Grade / index de solde
@@ -91,7 +96,7 @@ export function Calculator() {
 
                 <label className="block">
                   <span className="text-[0.75rem] font-bold uppercase tracking-wide text-army-900 dark:text-slate-200">
-                    Unité / corps d'appartenance
+                    Unité / corps d&apos;appartenance
                   </span>
                   <select
                     value={unit}
@@ -119,7 +124,7 @@ export function Calculator() {
                   >
                     <option value="non">Militaire / vétéran pensionné</option>
                     <option value="veuve">Veuve — solde de réversion</option>
-                    <option value="orphelin">Orphelin — pension d'ayant droit</option>
+                    <option value="orphelin">Orphelin — pension d&apos;ayant droit</option>
                   </select>
                 </label>
 
@@ -132,7 +137,10 @@ export function Calculator() {
                       <button
                         key={rate}
                         type="button"
-                        onClick={() => setDisability(rate)}
+                        onClick={() => {
+                          resetSaveFeedback();
+                          setDisability(rate);
+                        }}
                         aria-pressed={disabilityRate === rate}
                         className={`tap-target min-w-[3rem] rounded-xl border px-2 text-[0.8rem] font-bold transition ${
                           disabilityRate === rate
@@ -145,7 +153,7 @@ export function Calculator() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </fieldset>
 
               <div className="mt-5">
                 <div className="flex items-end justify-between gap-3">
@@ -162,7 +170,11 @@ export function Calculator() {
                   max={45}
                   step={1}
                   value={years}
-                  onChange={(e) => setYears(Number(e.target.value))}
+                  disabled={saving}
+                  onChange={(e) => {
+                    resetSaveFeedback();
+                    setYears(Number(e.target.value));
+                  }}
                   aria-label="Années de service retenues"
                   className="mt-3 h-11 w-full accent-gold-500"
                 />
@@ -176,6 +188,7 @@ export function Calculator() {
               <button
                 type="button"
                 onClick={persist}
+                disabled={saving}
                 className="tap-target mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950 transition hover:bg-gold-400"
               >
                 {saving ? (
@@ -185,8 +198,13 @@ export function Calculator() {
                 )}
                 Enregistrer ma simulation
               </button>
+              {saveError && (
+                <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
+                  Enregistrement indisponible. Le calcul indicatif reste affiché.
+                </p>
+              )}
               {savedRef ? (
-                <p className="mt-2 text-center text-[0.72rem] font-semibold text-emerald-600 dark:text-emerald-400">
+                <p role="status" className="mt-2 text-center text-[0.72rem] font-semibold text-emerald-600 dark:text-emerald-400">
                   Simulation enregistrée — référence {savedRef}
                 </p>
               ) : null}
@@ -231,17 +249,17 @@ export function Calculator() {
                 </>
               )}
 
-              <dl className="mt-4 space-y-1.5 border-t border-white/15 pt-3 text-[0.78rem]">
+              <dl className="mt-4 space-y-1.5 border-t border-current/20 pt-3 text-[0.78rem]">
                 {result.breakdown.map((row) => (
                   <div key={row.label} className="flex items-baseline justify-between gap-3">
-                    <dt className="text-slate-300">{row.label}</dt>
-                    <dd className="text-end font-bold text-white">{row.value}</dd>
+                    <dt className={result.eligible ? "text-slate-300" : "text-slate-600 dark:text-slate-200"}>{row.label}</dt>
+                    <dd className="text-end font-bold">{row.value}</dd>
                   </div>
                 ))}
               </dl>
 
-              <div className="mt-4 rounded-xl bg-white/5 p-3">
-                <p className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-wide text-gold-300">
+              <div className="mt-4 rounded-xl bg-black/5 p-3 dark:bg-white/5">
+                <p className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-wide text-current">
                   <FileCheck2 className="h-4 w-4" strokeWidth={2.2} />
                   Checklist de votre dossier
                 </p>
@@ -249,7 +267,7 @@ export function Calculator() {
                   {result.documents.map((doc) => (
                     <li
                       key={doc}
-                      className="flex gap-2 text-[0.78rem] leading-snug text-slate-200"
+                      className="flex gap-2 text-[0.78rem] leading-snug"
                     >
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-500" />
                       {doc}

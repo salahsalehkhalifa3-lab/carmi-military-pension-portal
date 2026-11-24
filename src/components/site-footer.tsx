@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Landmark, ShieldCheck } from "lucide-react";
+import { Landmark } from "lucide-react";
 import { CONTACT, NAV_LINKS, SITE_NAME, SOCIALS } from "@/lib/institution";
 import { OfficialChannels, ShareRow } from "@/components/share";
 
@@ -22,7 +22,7 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="mt-7 grid gap-6 border-t border-white/10 pt-7 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-7 grid gap-6 border-t border-white/10 pt-7 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <div className="flex items-center gap-3">
               <Image
@@ -43,10 +43,6 @@ export function SiteFooter() {
               {SITE_NAME} — gestion des pensions militaires, des rentes d&apos;invalidité,
               des ayants droit des Martyrs de la Nation et de la bancarisation des
               militaires tchadiens.
-            </p>
-            <p className="mt-3 inline-flex items-center gap-2 text-[0.72rem] font-semibold text-gold-300">
-              <ShieldCheck className="h-4 w-4" strokeWidth={2.1} />
-              Registre biométrique souverain sécurisé
             </p>
           </div>
 
@@ -106,7 +102,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div>
+          <div className="min-w-0 lg:col-span-2">
             <h2 className="text-[0.72rem] font-black uppercase tracking-widest text-white">
               Réseaux officiels
             </h2>
@@ -118,7 +114,7 @@ export function SiteFooter() {
                 Partager le portail
               </p>
               <div className="mt-2">
-                <ShareRow title="Portail officiel CARMI" target="footer-page" />
+                <ShareRow title="Portail officiel CARMI" target="page" />
               </div>
             </div>
             <a
@@ -136,11 +132,6 @@ export function SiteFooter() {
           <p className="text-[0.72rem] leading-relaxed text-slate-400">
             © {year} Caisse de Retraite des Militaires (CARMI) - République du Tchad. Tous
             droits réservés.
-          </p>
-          <p className="mt-1.5 text-[0.66rem] leading-relaxed text-slate-500">
-            Contenu officiel publié sous l&apos;autorité du Ministère des Armées, des
-            Anciens Combattants et des Victimes de Guerre. Toute reproduction des
-            communiqués doit citer la source CARMI.
           </p>
         </div>
       </div>

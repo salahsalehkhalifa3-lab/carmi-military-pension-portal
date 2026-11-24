@@ -190,24 +190,26 @@ export function OfficialChannels() {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-      {items.map((item) => (
-        <a
-          key={item.label}
-          href={item.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`tap-target flex flex-col justify-center rounded-xl px-3 py-2.5 text-start transition ${item.className}`}
-        >
-          <span className="flex items-center gap-2 text-[0.8rem] font-black leading-tight">
-            <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.1} />
-            {item.label}
-          </span>
-          <span className="mt-0.5 text-[0.68rem] font-medium opacity-90">
-            {item.hint}
-          </span>
-        </a>
-      ))}
+    <div className="@container">
+      <div className="grid grid-cols-2 gap-2 @md:grid-cols-3">
+        {items.map((item) => (
+          <a
+            key={item.label}
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`tap-target flex flex-col justify-center rounded-xl px-3 py-2.5 text-start transition ${item.className}`}
+          >
+            <span className="flex items-center gap-2 text-[0.8rem] font-black leading-tight wrap-anywhere">
+              <item.icon className="h-5 w-5 shrink-0" strokeWidth={2.1} />
+              <span>{item.label}</span>
+            </span>
+            <span className="mt-0.5 text-[0.68rem] font-medium opacity-90">
+              {item.hint}
+            </span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

@@ -54,7 +54,9 @@
   }
 
   .dark :focus-visible,
-  header :focus-visible {
+  header :focus-visible,
+  footer :focus-visible,
+  [role="dialog"].bg-army-900 :focus-visible {
     outline-color: var(--color-gold-500);
   }
 

@@ -277,7 +277,7 @@ export function Contact({
                 href={`https://wa.me/${CONTACT.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="tap-target flex items-center gap-3 rounded-2xl bg-emerald-600 px-4 py-3 text-white"
+                className="tap-target flex items-center gap-3 rounded-2xl bg-emerald-700 px-4 py-3 text-white"
               >
                 <MessageCircle className="h-6 w-6 shrink-0" strokeWidth={2.2} />
                 <span>

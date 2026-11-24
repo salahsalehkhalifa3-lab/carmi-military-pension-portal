@@ -52,11 +52,10 @@ export function SiteHeader() {
             <Link
               href="/"
               className="flex min-w-0 flex-1 items-center gap-2.5"
-              aria-label={`${SITE_SHORT} — Accueil`}
             >
               <Image
                 src="/image/logocarmi.jpg"
-                alt="Sceau officiel de la Caisse de Retraite des Militaires"
+                alt=""
                 width={56}
                 height={56}
                 priority
@@ -101,7 +100,7 @@ export function SiteHeader() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="tap-target hidden items-center gap-2 rounded-xl bg-emerald-600 px-3 text-sm font-bold text-white transition hover:bg-emerald-500 sm:inline-flex"
+                className="tap-target hidden items-center gap-2 rounded-xl bg-emerald-700 px-3 text-sm font-bold text-white transition hover:bg-emerald-800 sm:inline-flex"
                 aria-label="Assistance WhatsApp CARMI"
               >
                 <MessageCircle className="h-5 w-5" strokeWidth={2.1} />
@@ -211,7 +210,7 @@ export function SiteHeader() {
                   href={`https://wa.me/${CONTACT.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="tap-target flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-black text-white"
+                  className="tap-target flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 text-sm font-black text-white"
                 >
                   <MessageCircle className="h-5 w-5" strokeWidth={2.1} />
                   Assistance WhatsApp

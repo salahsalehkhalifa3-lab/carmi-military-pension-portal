@@ -38,11 +38,11 @@ const CHANNEL_ICON: Record<ShareChannel, IconComponent> = {
 };
 
 const CHANNEL_STYLE: Record<string, string> = {
-  whatsapp: "bg-emerald-600 text-white hover:bg-emerald-500",
-  facebook: "bg-[#1877F2] text-white hover:bg-[#0f6add]",
+  whatsapp: "bg-emerald-700 text-white hover:bg-emerald-800",
+  facebook: "bg-[#1254AD] text-white hover:bg-[#10488F]",
   x: "bg-black text-white hover:bg-neutral-800",
   linkedin: "bg-[#0A66C2] text-white hover:bg-[#084d96]",
-  telegram: "bg-[#229ED9] text-white hover:bg-[#1b86b8]",
+  telegram: "bg-[#12658E] text-white hover:bg-[#0F5577]",
   sms: "bg-navy-700 text-white hover:bg-navy-500",
   native: "bg-gold-500 text-army-950 hover:bg-gold-400",
   copy: "bg-slate-200 text-slate-800 hover:bg-slate-300 dark:bg-white/10 dark:text-white",
@@ -150,21 +150,21 @@ export function OfficialChannels() {
       icon: WhatsappIcon,
       label: "Canal WhatsApp officiel",
       hint: "Alertes de paie instantanées",
-      className: "bg-emerald-600 text-white hover:bg-emerald-500",
+      className: "bg-emerald-700 text-white hover:bg-emerald-800",
     },
     {
       href: SOCIALS.facebook,
       icon: FacebookIcon,
       label: "Page Facebook",
       hint: "Communiqués officiels",
-      className: "bg-[#1877F2] text-white hover:bg-[#0f6add]",
+      className: "bg-[#1254AD] text-white hover:bg-[#10488F]",
     },
     {
       href: SOCIALS.youtube,
       icon: YoutubeIcon,
       label: "Chaîne YouTube",
       hint: "Guides bancarisation",
-      className: "bg-[#FF0000] text-white hover:bg-[#d60000]",
+      className: "bg-[#AD1212] text-white hover:bg-[#8D1010]",
     },
     {
       href: SOCIALS.x,
@@ -185,7 +185,7 @@ export function OfficialChannels() {
       icon: TelegramIcon,
       label: "Telegram",
       hint: "Diffusion des régions",
-      className: "bg-[#229ED9] text-white hover:bg-[#1b86b8]",
+      className: "bg-[#12658E] text-white hover:bg-[#0F5577]",
     },
   ];
 
@@ -255,7 +255,7 @@ export function StickyMobileDock() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackShare("whatsapp", "page")}
-            className="tap-target flex flex-1 flex-col items-center justify-center rounded-xl bg-emerald-600 px-1 text-white"
+            className="tap-target flex flex-1 flex-col items-center justify-center rounded-xl bg-emerald-700 px-1 text-white"
             aria-label="Assistance WhatsApp CARMI"
           >
             <MessageCircle className="h-5 w-5" strokeWidth={2.2} />

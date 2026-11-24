@@ -178,7 +178,7 @@ export function Calculator() {
                   aria-label="Années de service retenues"
                   className="mt-3 h-11 w-full accent-gold-500"
                 />
-                <div className="flex justify-between text-[0.65rem] font-semibold uppercase tracking-wide text-slate-400">
+                <div className="flex justify-between text-[0.65rem] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
                   <span>0 an</span>
                   <span>15 ans — seuil d&apos;éligibilité</span>
                   <span>45 ans</span>

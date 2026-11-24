@@ -121,7 +121,7 @@ export function SiteFooter() {
               href={SOCIALS.whatsappChannel}
               target="_blank"
               rel="noopener noreferrer"
-              className="tap-target mt-3 inline-flex w-full items-center justify-center rounded-xl bg-emerald-600 px-4 text-[0.78rem] font-black text-white"
+              className="tap-target mt-3 inline-flex w-full items-center justify-center rounded-xl bg-emerald-700 px-4 text-[0.78rem] font-black text-white"
             >
               Rejoindre le canal WhatsApp CARMI
             </a>

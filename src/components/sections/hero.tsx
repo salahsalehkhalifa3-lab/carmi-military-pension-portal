@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { CalendarDays, CreditCard, Share2, ShieldCheck } from "lucide-react";
 import { usePortal } from "@/lib/i18n";
 import { trackShare } from "@/lib/share";
-import { CONTACT } from "@/lib/institution";
 
 export function Hero() {
   const { t } = usePortal();
@@ -35,14 +33,6 @@ export function Hero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-army-950 text-white">
-      <Image
-       src="/image/dgcarmi.jpg"
-       alt="Directeur Général de la CARMI"
-       fill
-       priority
-       sizes="100vw"
-       className="absolute inset-0 -z-20 h-full w-full object-cover opacity-45"
-      />
       <div
         className="absolute inset-0 -z-10 bg-gradient-to-b from-army-950/95 via-army-900/90 to-army-950"
         aria-hidden="true"
@@ -52,7 +42,7 @@ export function Hero() {
       <div className="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6 sm:pb-12 sm:pt-12">
         <p className="inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-army-950/70 px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-gold-300">
           <ShieldCheck className="h-4 w-4" strokeWidth={2.2} />
-          Institution souveraine — {CONTACT.ministry}
+          République du Tchad
         </p>
 
         <h1 className="mt-4 text-balance text-[1.75rem] font-black leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl">

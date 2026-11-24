@@ -15,8 +15,6 @@ export const CONTACT = {
   address:
     "Avenue Charles de Gaulle, Quartier Klemat — N'Djamena, République du Tchad",
   hours: "Lun–Ven 07h30–15h30 · Samedi 08h00–12h00",
-  ministry:
-    "Ministère des Armées, des Anciens Combattants et des Victimes de Guerre",
 };
 
 export const SOCIALS = {
@@ -39,36 +37,6 @@ export const NAV_LINKS = [
   { href: "/#contact", key: "nav_contact" as const, label: "Contact" },
   { href: "/suivi", key: "nav_tracking" as const, label: "Suivi de dossier" },
 ];
-
-export const LEADERSHIP = {
-  rank: "Général de Division",
-  name: "Dr. Abdelkerim Mahamat Itno",
-  role: "Directeur Général de la Caisse de Retraite des Militaires",
-  citation:
-    "Celui qui a porté l'uniforme ne doit jamais porter le doute. Notre devoir est de servir le vétéran avec la même rigueur qu'il a servie la Nation.",
-  priorities: [
-    {
-      title: "Modernisation administrative",
-      detail:
-        "Dématérialisation intégrale des dossiers de pension et signature électronique des titres de pension.",
-    },
-    {
-      title: "Sécurité numérique souveraine",
-      detail:
-        "Registre biométrique central, lutte contre les pensions fictives et contrôle d'identité numérique.",
-    },
-    {
-      title: "Transparence des décaissements",
-      detail:
-        "Publication du calendrier de paie par région militaire et traçabilité de chaque solde versée.",
-    },
-    {
-      title: "Protection sociale des vétérans",
-      detail:
-        "Accès aux soins, aide aux grands blessés et accompagnement des veuves et orphelins des Martyrs.",
-    },
-  ],
-};
 
 export const FAQ = [
   {

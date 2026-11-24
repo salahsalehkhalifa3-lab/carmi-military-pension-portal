@@ -319,9 +319,6 @@ export function Contact({
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" strokeWidth={2.1} />
                   {CONTACT.hours}
                 </p>
-                <p className="mt-2 inline-flex items-start gap-2 text-[0.78rem] leading-snug font-semibold text-navy-700 dark:text-navy-300">
-                  Tutelle : {CONTACT.ministry}
-                </p>
               </div>
             </div>
           </Reveal>

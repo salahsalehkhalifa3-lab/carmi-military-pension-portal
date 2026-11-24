@@ -18,7 +18,7 @@ export function SiteFooter() {
             Unité — Travail — Progrès
           </p>
           <p className="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-slate-400">
-            République du Tchad · {CONTACT.ministry}
+            République du Tchad
           </p>
         </div>
 

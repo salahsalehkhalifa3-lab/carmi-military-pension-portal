@@ -16,8 +16,8 @@ type Dict = Record<string, { fr: string; ar: string }>;
 
 const DICT: Dict = {
   ribbon: {
-    fr: "RÉPUBLIQUE DU TCHAD • MINISTÈRE DES ARMÉES | C.A.R.M.I.",
-    ar: "جمهورية تشاد • وزارة القوات المسلحة | صندوق تقاعد العسكريين",
+    fr: "RÉPUBLIQUE DU TCHAD | C.A.R.M.I.",
+    ar: "جمهورية تشاد | صندوق تقاعد العسكريين",
   },
   nav_services: { fr: "Prestations", ar: "الخدمات" },
   nav_calendar: { fr: "Calendrier", ar: "التقويم" },

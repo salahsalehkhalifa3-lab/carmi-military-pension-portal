@@ -70,7 +70,7 @@ export const editorial: Record<string, EditorialPage> = {
   },
   commandement: {
     title: ["Direction générale", "الإدارة العامة"], summary: ["Missions de gestion et axes de modernisation proposés.", "مهام الإدارة ومحاور التحديث المقترحة."],
-    paragraphs: [{ title: ["Organe de gestion", "هيئة تسيير"], body: ["La Direction générale est l’un des deux organes prévus par la loi. La fonction est présentée sans attribution à un titulaire ni utilisation du portrait historique.", "الإدارة العامة إحدى الهيئتين المنصوص عليهما في القانون. ويُعرض المنصب دون إسناده إلى شخص أو استخدام الصورة التاريخية."], article: "6" }],
+    paragraphs: [{ title: ["Organe de gestion", "هيئة تسيير"], body: ["La Direction générale et le conseil d’administration sont les deux organes d’administration et de gestion définis par la loi de création.", "الإدارة العامة ومجلس الإدارة هما هيئتا الإدارة والتسيير اللتان يحددهما قانون الإنشاء."], article: "6" }],
   },
   actualites: {
     title: ["Actualités et communiqués", "الأخبار والبيانات"], summary: ["Découvrez un exemple éditorial clairement identifié.", "اطّلع على مثال تحريري واضح."],

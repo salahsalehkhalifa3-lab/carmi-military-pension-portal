@@ -77,7 +77,7 @@ export function SiteHeader() {
                 type="button"
                 onClick={toggleLang}
                 className="tap-target inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-2 text-xs font-bold text-white transition hover:bg-white/10"
-                aria-label={lang === "fr" ? "التبديل إلى العربية" : "Switch to French"}
+                aria-label={lang === "fr" ? "التبديل إلى العربية" : "Passer en français"}
               >
                 <Languages className="h-4 w-4" strokeWidth={2} />
                 <span className="hidden sm:inline">{t("lang_toggle")}</span>

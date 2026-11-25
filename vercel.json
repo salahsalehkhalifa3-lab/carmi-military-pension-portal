@@ -8,7 +8,8 @@
       "feature/carmi-p7b-consolidation": false,
       "feature/carmi-p7c-direction": false,
       "feature/carmi-portrait-prive": false,
-      "feature/carmi-p7d": false
+      "feature/carmi-p7d": false,
+      "fix/carmi-p7d1": false
     }
   }
 }

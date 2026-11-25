@@ -8,7 +8,7 @@ export async function GET() {
 
   if (!jpeg) return new Response(null, { status: 404, headers });
 
-  return new Response(Uint8Array.from(Buffer.from(jpeg, "base64")), {
+  return new Response(Uint8Array.from(jpeg), {
     headers: { ...headers, "Content-Type": "image/jpeg", "X-Content-Type-Options": "nosniff" },
   });
 }

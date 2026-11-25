@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
+import { isPrivatePreview } from "@/lib/private-preview";
 import { notFound } from "next/navigation";
 import { PageHeading } from "@/components/portal/layout";
 
@@ -7,13 +7,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Administration de démonstration", robots: { index: false, follow: false } };
 
 export default async function Page() {
-  // Vercel Authentication protects this deployment URL before routing.
-  if (process.env.VERCEL_ENV !== "preview" ||
-      process.env.VERCEL_GIT_COMMIT_REF !== "feature/carmi-p7d" ||
-      !process.env.VERCEL_URL ||
-      (await headers()).get("host") !== process.env.VERCEL_URL) {
-    notFound();
-  }
+  if (!(await isPrivatePreview())) notFound();
 
   const { Administration } = await import("@/components/portal/Administration");
 

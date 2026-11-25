@@ -1,5 +1,5 @@
-import { PremiumDemo } from "@/components/premium-demo";
+import { Home } from "@/components/portal/Home";
 
 export default function HomePage() {
-  return <PremiumDemo />;
+  return <Home />;
 }

@@ -9,12 +9,12 @@ import {
   Languages,
   Menu,
   Moon,
-  ShieldCheck,
   Sun,
   X,
 } from "lucide-react";
-import { NAV_LINKS, SITE_SHORT } from "@/lib/institution";
+import { SITE_SHORT } from "@/lib/institution";
 import { useDialogKeyboard } from "@/lib/use-dialog-keyboard";
+import { Navigation } from "@/components/portal/Navigation";
 import { usePortal } from "@/lib/i18n";
 
 export function SiteHeader() {
@@ -70,20 +70,7 @@ export function SiteHeader() {
               </span>
             </Link>
 
-            <nav
-              aria-label="Navigation principale"
-              className="hidden items-center gap-1 xl:flex"
-            >
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="rounded-lg px-2 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-gold-300"
-                >
-                  {t(link.key, link.label)}
-                </Link>
-              ))}
-            </nav>
+            <Navigation />
 
             <div className="flex items-center gap-1.5">
               <button
@@ -164,19 +151,7 @@ export function SiteHeader() {
                 </button>
               </div>
 
-              <nav className="flex flex-col gap-1 p-3" aria-label="Menu mobile">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={closeMenu}
-                    className="tap-target flex items-center justify-between rounded-xl px-4 text-base font-bold text-slate-100 transition hover:bg-white/10 hover:text-gold-300"
-                  >
-                    {t(link.key, link.label)}
-                    <ShieldCheck className="h-4 w-4 text-gold-500" strokeWidth={2} />
-                  </Link>
-                ))}
-              </nav>
+              <Navigation mobile onNavigate={closeMenu} />
 
             </motion.div>
           </motion.div>

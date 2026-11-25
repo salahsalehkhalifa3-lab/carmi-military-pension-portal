@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { PremiumTracking } from "@/components/premium-demo";
+import { editorial } from "@/lib/editorial";
+import { Editorial } from "@/components/portal/Editorial";
+import { Tracking } from "@/components/portal/Tracking";
 
-export const metadata: Metadata = {
-  title: "Suivi de dossier de pension",
-  description: "Présentation du parcours de suivi, désactivé pour cette démonstration.",
-};
+const page = editorial["suivi"];
+export const metadata: Metadata = { title: page.title[0], description: page.summary[0] };
 
-export default function SuiviPage() {
-  return <PremiumTracking />;
+export default function Page() {
+  return (
+    <>
+      <Editorial slug="suivi" />
+      <Tracking />
+    </>
+  );
 }

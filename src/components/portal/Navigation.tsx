@@ -9,8 +9,8 @@ import { useTranslation } from "./layout";
 
 const groups = [
   { label: ["La CARMI", "عن الصندوق"], pages: ["institution", "historique", "missions", "commandement", "organisation", "cadre-juridique"] },
-  { label: ["Prestations et démarches", "الخدمات والإجراءات"], pages: ["prestations", "demarches", "pensionne", "ayants-droit", "suivi", "simulateur"] },
-  { label: ["Informations pratiques", "معلومات عملية"], pages: ["calendrier", "agences", "ressources", "actualites", "contact"] },
+  { label: ["Prestations et démarches", "الخدمات والإجراءات"], pages: ["prestations", "orientation", "demarches", "pensionne", "ayants-droit", "suivi", "simulateur"] },
+  { label: ["Informations pratiques", "معلومات عملية"], pages: ["calendrier", "agences", "recherche", "ressources", "actualites", "contact"] },
 ] as const;
 
 export function Navigation({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?: () => void }) {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { editorial } from "@/lib/editorial";
 import { PageHeading } from "@/components/portal/layout";
 import { Editorial } from "@/components/portal/Editorial";
+import { BeneficiarySpace } from "@/components/portal/BeneficiarySpace";
 import { Journey } from "@/components/portal/Journey";
 
 const page = editorial["ayants-droit"];
@@ -12,6 +13,7 @@ export default function Page() {
     <>
       <PageHeading title={page.title} description={page.summary} />
       <Editorial slug="ayants-droit" />
+      <BeneficiarySpace survivor />
       <Journey initial="reversion" />
     </>
   );

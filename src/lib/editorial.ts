@@ -8,6 +8,16 @@ export type EditorialPage = {
 };
 
 export const editorial: Record<string, EditorialPage> = {
+  orientation: {
+    title: ["Assistant d’orientation", "مساعد التوجيه"],
+    summary: ["Trouver un parcours adapté à votre besoin.", "العثور على المسار المناسب لاحتياجك."],
+    paragraphs: [{ title: ["Choisir un parcours", "اختيار مسار"], body: ["Préparer une retraite, comprendre la réversion, trouver un document ou consulter l’état du suivi.", "الاستعداد للتقاعد أو فهم معاش المستحقين أو العثور على وثيقة أو معرفة حالة المتابعة."] }],
+  },
+  recherche: {
+    title: ["Recherche", "البحث"],
+    summary: ["Rechercher dans les rubriques et les questions fréquentes.", "البحث في الأقسام والأسئلة الشائعة."],
+    paragraphs: [],
+  },
   institution: {
     title: ["Présentation de la CARMI", "التعريف بالصندوق"],
     summary: ["Comprendre le rôle de la Caisse de Retraite des Militaires et son cadre institutionnel.", "التعرّف على دور صندوق تقاعد العسكريين وإطاره المؤسسي."],

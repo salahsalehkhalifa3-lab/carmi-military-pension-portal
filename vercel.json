@@ -7,7 +7,8 @@
       "feature/carmi-p7-world-class-portal": false,
       "feature/carmi-p7b-consolidation": false,
       "feature/carmi-p7c-direction": false,
-      "feature/carmi-portrait-prive": false
+      "feature/carmi-portrait-prive": false,
+      "feature/carmi-p7d": false
     }
   }
 }

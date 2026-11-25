@@ -5,9 +5,8 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { usePortal } from "@/lib/i18n";
 import { editorial } from "@/lib/editorial";
-import { HomeLeadership } from "./HistoricalPortrait";
 
-export function Home({ showPortrait }: { showPortrait: boolean }) {
+export function Home() {
   const tr = useTranslation();
   const isArabic = usePortal().lang === "ar";
 
@@ -51,7 +50,6 @@ export function Home({ showPortrait }: { showPortrait: boolean }) {
         </Container>
         <div className="flag-lisere h-1.5" aria-hidden="true" />
       </section>
-        {showPortrait && <HomeLeadership />}
         <section className="premium-section">
           <Container>
             <SectionTitle label={tr(["Orientation", "التوجيه"])} title={tr(["Accéder aux rubriques", "الوصول إلى الأقسام"])} />

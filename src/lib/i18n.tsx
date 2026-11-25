@@ -16,11 +16,10 @@ type Dict = Record<string, { fr: string; ar: string }>;
 
 const DICT: Dict = {
   demo: {
-    fr: "Version de démonstration — Proposition de portail institutionnel réalisée par PROSPERA Tchad, soumise à validation de la CARMI.",
-    ar: "نسخة تجريبية — مقترح بوابة مؤسسية من PROSPERA Tchad، يخضع لاعتماد صندوق تقاعد العسكريين.",
+    fr: "Démonstration commerciale — Proposition de portail institutionnel soumise à validation de la CARMI.",
+    ar: "عرض تجاري تجريبي — مقترح بوابة مؤسسية يخضع لاعتماد صندوق تقاعد العسكريين.",
   },
-  credit_prefix: { fr: "Conception et développement :", ar: "التصميم والتطوير:" },
-  credit_suffix: { fr: "Ingénierie et Solutions numériques.", ar: "الهندسة والحلول الرقمية." },
+  credit_prefix: { fr: "Une proposition de transformation numérique développée par", ar: "مقترح للتحول الرقمي من تطوير" },
   ribbon: {
     fr: "RÉPUBLIQUE DU TCHAD | C.A.R.M.I.",
     ar: "جمهورية تشاد | صندوق تقاعد العسكريين",

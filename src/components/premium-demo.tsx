@@ -10,6 +10,8 @@ import {
 import { usePortal } from "@/lib/i18n";
 import { computeEstimate, DISABILITY_RATES, RANKS, UNITS, type EstimateInput } from "@/lib/institution";
 
+import { creationLaw, portalPages, type PortalPage } from "@/lib/portal-pages";
+
 type Text = readonly [string, string];
 
 const services = [
@@ -44,7 +46,7 @@ function SectionTitle({ label, title, description }: { label: string; title: str
   );
 }
 
-export function PremiumDemo() {
+export function PremiumDemo({ route }: { route?: PortalPage }) {
   const { lang } = usePortal();
   const isArabic = lang === "ar";
   const tr = (pair: Text) => pair[isArabic ? 1 : 0];
@@ -52,12 +54,31 @@ export function PremiumDemo() {
     rank: RANKS[1].value, unit: UNITS[0].value, years: 22, disabilityRate: 0, survivor: "non",
   });
   const result = computeEstimate(scenario);
+  const [query, setQuery] = useState("");
+  const normalize = (value: string) => value.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase().trim();
+  const resources = Object.entries(portalPages).filter(([, content]) =>
+    !query.trim() || normalize(content.join(" ")).includes(normalize(query)),
+  );
   const number = new Intl.NumberFormat(isArabic ? "ar" : "fr-FR", { maximumFractionDigits: 1 });
   const field = "mt-2 min-h-11 w-full rounded-lg border border-slate-400 bg-white px-3 text-army-950 dark:border-slate-500 dark:bg-tactical-950 dark:text-white";
 
   return (
     <>
-      <section className="premium-hero relative overflow-hidden text-white">
+      {route && (
+        <div className="premium-hero py-8 text-white sm:py-11">
+          <Container>
+            <nav aria-label={tr(["Fil d’Ariane", "مسار التنقل"])} className="mb-3 text-sm text-gold-300">
+              <Link href="/" className="underline">{tr(["Accueil", "الرئيسية"])}</Link>
+              <span aria-hidden="true"> / </span>
+              <span aria-current="page">{portalPages[route][isArabic ? 1 : 0]}</span>
+            </nav>
+            <h1 className="premium-heading text-3xl font-semibold sm:text-5xl">{portalPages[route][isArabic ? 1 : 0]}</h1>
+            <p className="mt-3 text-slate-200">{portalPages[route][isArabic ? 3 : 2]}</p>
+          </Container>
+        </div>
+      )}
+      {!route && (
+<section className="premium-hero relative overflow-hidden text-white">
         <Container>
           <div className="grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1.35fr_1fr] lg:py-24">
             <div>
@@ -72,16 +93,16 @@ export function PremiumDemo() {
                 {tr(["Une vision du futur portail CARMI pour rendre les prestations, les calendriers et les démarches plus faciles à consulter.", "تصوّر لبوابة صندوق تقاعد العسكريين لتيسير الاطّلاع على الخدمات والمواعيد والإجراءات."])}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a className="premium-button bg-gold-300 text-army-950 hover:bg-gold-400" href="#prestations">
+                <Link className="premium-button bg-gold-300 text-army-950 hover:bg-gold-400" href="/prestations">
                   {tr(["Découvrir les prestations", "استكشف الخدمات"])} <ArrowUpRight aria-hidden="true" size={18} />
-                </a>
-                <a className="premium-button border border-white/40 text-white hover:bg-white/10" href="#simulateur">
+                </Link>
+                <Link className="premium-button border border-white/40 text-white hover:bg-white/10" href="/simulateur">
                   {tr(["Explorer la démonstration", "استكشف النسخة التجريبية"])}
-                </a>
+                </Link>
               </div>
               <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-gold-300">
-                <a className="underline underline-offset-4" href="#calendrier">{tr(["Calendrier fictif", "تقويم افتراضي"])}</a>
-                <a className="underline underline-offset-4" href="#contact">{tr(["La proposition PROSPERA", "مقترح PROSPERA"])}</a>
+                <Link className="underline underline-offset-4" href="/calendrier">{tr(["Calendrier fictif", "تقويم افتراضي"])}</Link>
+                <Link className="underline underline-offset-4" href="/contact">{tr(["La proposition PROSPERA", "مقترح PROSPERA"])}</Link>
               </div>
             </div>
             <div className="premium-emblem hidden min-h-[390px] place-items-center lg:grid" aria-hidden="true">
@@ -95,7 +116,23 @@ export function PremiumDemo() {
         </Container>
         <div className="flag-lisere h-1.5" aria-hidden="true" />
       </section>
-
+      )}
+      {!route && (
+        <section className="premium-section">
+          <Container>
+            <SectionTitle label={tr(["Orientation", "التوجيه"])} title={tr(["Accéder aux rubriques", "الوصول إلى الأقسام"])} />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {Object.entries(portalPages).map(([slug, content]) => (
+                <Link key={slug} id={slug} href={`/${slug}`} className="premium-card block p-5 hover:underline">
+                  <h3 className="flex items-center justify-between gap-2 font-bold">{content[isArabic ? 1 : 0]} <ArrowUpRight aria-hidden="true" size={18} /></h3>
+                  <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{content[isArabic ? 3 : 2]}</p>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+      {route === "prestations" && (
       <section id="prestations" className="premium-section">
         <Container>
           <SectionTitle label={tr(["Services proposés", "الخدمات المقترحة"])} title={tr(["Les prestations, parcours par parcours", "الخدمات ومساراتها"])} description={tr(["Six exemples de fiches pour illustrer le futur portail. Les conditions et pièces officielles restent à valider.", "ستة نماذج لتوضيح شكل البوابة المستقبلية. تبقى الشروط والوثائق الرسمية رهناً بالاعتماد."])} />
@@ -120,7 +157,8 @@ export function PremiumDemo() {
           </div>
         </Container>
       </section>
-
+      )}
+      {route === "commandement" && (
       <section id="commandement" className="premium-section bg-army-950 text-white">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[1fr_1.35fr]">
@@ -145,30 +183,8 @@ export function PremiumDemo() {
           </div>
         </Container>
       </section>
-
-      <div className="premium-section bg-army-50 dark:bg-tactical-900">
-        <Container>
-          <div className="grid gap-6 md:grid-cols-2">
-            <section id="calendrier">
-              <SectionTitle label={tr(["Exemple fictif", "مثال افتراضي"])} title={tr(["Calendrier des paiements", "تقويم المدفوعات"])} />
-              <article className="premium-card p-5">
-                <CalendarDays aria-hidden="true" className="mb-3 text-gold-700 dark:text-gold-300" />
-                <h3 className="font-bold">{tr(["Région de démonstration", "منطقة تجريبية"])} · {tr(["2–3 janvier 2030", "٢–٣ يناير ٢٠٣٠"])}</h3>
-                <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{tr(["Statut illustratif : planifié. Ces dates ne correspondent à aucun paiement réel.", "حالة توضيحية: مجدول. لا ترتبط هذه التواريخ بأي دفعات فعلية."])}</p>
-              </article>
-            </section>
-            <section id="agences">
-              <SectionTitle label={tr(["Exemple fictif", "مثال افتراضي"])} title={tr(["Agences et guichets", "الفروع ومكاتب الخدمة"])} />
-              <article className="premium-card p-5">
-                <Building2 aria-hidden="true" className="mb-3 text-gold-700 dark:text-gold-300" />
-                <h3 className="font-bold">{tr(["Guichet de démonstration", "مكتب خدمة تجريبي"])}</h3>
-                <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{tr(["Adresse, horaires, coordonnées et banques partenaires à renseigner après validation.", "يُضاف العنوان وساعات العمل وبيانات الاتصال والبنوك الشريكة بعد الاعتماد."])}</p>
-              </article>
-            </section>
-          </div>
-        </Container>
-      </div>
-
+      )}
+      {route === "simulateur" && (
       <section id="simulateur" className="premium-section">
         <Container>
           <SectionTitle label={tr(["Calcul local", "حساب على الجهاز"])} title={tr(["Simulateur de retraite", "محاكي التقاعد"])} description={tr(["Simulation fictive et indicative — ne constitue pas un calcul réglementaire de pension.", "محاكاة افتراضية تقريبية — لا تشكّل حساباً نظامياً للمعاش."])} />
@@ -216,36 +232,26 @@ export function PremiumDemo() {
           </div>
         </Container>
       </section>
-
+      )}
+      {route === "actualites" && (
       <section id="actualites" className="premium-section bg-army-50 dark:bg-tactical-900">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-8 max-w-3xl">
             <div>
               <SectionTitle label={tr(["Exemple éditorial", "مثال تحريري"])} title={tr(["Actualités", "الأخبار"])} />
               <article className="premium-card p-5">
                 <p className="text-sm font-bold text-gold-700 dark:text-gold-300">{tr(["Communiqué fictif · 1er janvier 2030", "بيان افتراضي · ١ يناير ٢٠٣٠"])}</p>
                 <h3 className="mt-2 font-bold">{tr(["Présentation d’un calendrier de démonstration", "عرض تقويم تجريبي"])}</h3>
                 <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{tr(["Cet exemple illustre la façon dont un futur communiqué pourrait renvoyer vers le calendrier.", "يوضّح المثال كيف يمكن لبيان مستقبلي أن يحيل إلى التقويم."])}</p>
-                <a href="#calendrier" className="mt-3 inline-flex min-h-11 items-center font-semibold underline">{tr(["Voir le calendrier fictif", "عرض التقويم الافتراضي"])}</a>
+                <Link href="/calendrier" className="mt-3 inline-flex min-h-11 items-center font-semibold underline">{tr(["Voir le calendrier fictif", "عرض التقويم الافتراضي"])}</Link>
               </article>
             </div>
-            <div>
-              <SectionTitle label={tr(["Découvrir le projet", "التعرّف على المشروع"])} title={tr(["Questions fréquentes", "الأسئلة الشائعة"])} />
-              <div className="space-y-2">
-                {questions.map(({ q, a }) => (
-                  <details className="premium-card group" key={q[0]}>
-                    <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 p-4 text-sm font-bold">
-                      {tr(q)} <ChevronDown aria-hidden="true" size={18} className="shrink-0 group-open:rotate-180" />
-                    </summary>
-                    <p className="px-4 pb-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{tr(a)}</p>
-                  </details>
-                ))}
-              </div>
-            </div>
+
           </div>
         </Container>
       </section>
-
+      )}
+      {route === "contact" && (
       <section id="contact" className="premium-section bg-army-900 text-white">
         <Container>
           <div className="max-w-3xl">
@@ -260,6 +266,82 @@ export function PremiumDemo() {
           </div>
         </Container>
       </section>
+      )}
+      {(route === "calendrier" || route === "agences") && (
+<div className="premium-section bg-army-50 dark:bg-tactical-900">
+        <Container>
+          <div className="max-w-3xl">
+            {route === "calendrier" && <section id="calendrier">
+              <SectionTitle label={tr(["Exemple fictif", "مثال افتراضي"])} title={tr(["Calendrier des paiements", "تقويم المدفوعات"])} />
+              <article className="premium-card p-5">
+                <CalendarDays aria-hidden="true" className="mb-3 text-gold-700 dark:text-gold-300" />
+                <h3 className="font-bold">{tr(["Région de démonstration", "منطقة تجريبية"])} · {tr(["2–3 janvier 2030", "٢–٣ يناير ٢٠٣٠"])}</h3>
+                <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{tr(["Statut illustratif : planifié. Ces dates ne correspondent à aucun paiement réel.", "حالة توضيحية: مجدول. لا ترتبط هذه التواريخ بأي دفعات فعلية."])}</p>
+              </article>
+            </section>}
+            {route === "agences" && <section id="agences">
+              <SectionTitle label={tr(["Exemple fictif", "مثال افتراضي"])} title={tr(["Agences et guichets", "الفروع ومكاتب الخدمة"])} />
+              <article className="premium-card p-5">
+                <Building2 aria-hidden="true" className="mb-3 text-gold-700 dark:text-gold-300" />
+                <h3 className="font-bold">{tr(["Guichet de démonstration", "مكتب خدمة تجريبي"])}</h3>
+                <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{tr(["Adresse, horaires, coordonnées et banques partenaires à renseigner après validation.", "يُضاف العنوان وساعات العمل وبيانات الاتصال والبنوك الشريكة بعد الاعتماد."])}</p>
+              </article>
+            </section>}
+          </div>
+        </Container>
+      </div>
+      )}
+      {route === "commandement" && (
+        <section className="premium-section">
+          <Container>
+            <SectionTitle label={tr(["Cadre légal", "الإطار القانوني"])} title={tr(["Création, statut et missions", "الإنشاء والوضع القانوني والمهام"])} />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <article className="premium-card p-5">
+                <h3 className="font-bold">{tr(["Établissement public administratif", "مؤسسة إدارية عامة"])} </h3>
+                <p className="mt-2">{tr(["La loi n°14/PCMT/2022 crée la CARMI. L’article 2 fixe son siège à N’Djaména, prévoit son autonomie de gestion et désigne le ministère chargé des Finances pour la tutelle technique.", "أنشأ القانون رقم 14 لسنة 2022 الصندوق. تحدد المادة الثانية مقره في نجامينا واستقلاله الإداري والمالي والوصاية الفنية للوزارة المكلفة بالمالية."])}</p>
+              </article>
+              <article className="premium-card p-5">
+                <h3 className="font-bold">{tr(["Missions et gouvernance", "المهام والحوكمة"])}</h3>
+                <p className="mt-2">{tr(["Les articles 3 et 6 couvrent la gestion des régimes de pensions militaires, l’affiliation et la liquidation des pensions. La loi prévoit un conseil d’administration et une direction générale.", "تتناول المادتان 3 و6 إدارة أنظمة المعاشات العسكرية والانتساب وتصفية المعاشات. وينص القانون على مجلس إدارة وإدارة عامة."])}</p>
+              </article>
+            </div>
+            <a className="mt-5 inline-flex min-h-11 items-center font-semibold underline" href={creationLaw}>{tr(["Lire la loi au Journal officiel (PDF)", "قراءة القانون في الجريدة الرسمية (PDF)"])}</a>
+          </Container>
+        </section>
+      )}
+      {route === "ressources" && (
+        <section className="premium-section">
+          <Container>
+            <div className="grid gap-8 lg:grid-cols-2">
+              <div>
+                <SectionTitle label={tr(["Documentation", "الوثائق"])} title={tr(["Rechercher une rubrique", "البحث عن قسم"])} />
+                <label className="block font-semibold">
+                  {tr(["Recherche locale dans les rubriques", "بحث محلي في الأقسام"])}
+                  <input className={field} type="search" value={query} maxLength={80} onChange={(e) => setQuery(e.target.value)} />
+                </label>
+                <p className="mt-2 text-sm" role="status">{resources.length} {tr(["rubrique(s)", "قسم"])}</p>
+                <ul className="mt-3 space-y-2">
+                  {resources.map(([slug, content]) => <li key={slug}><Link className="inline-flex min-h-11 items-center underline" href={`/${slug}`}>{content[isArabic ? 1 : 0]}</Link></li>)}
+                </ul>
+                <a className="mt-5 inline-flex min-h-11 items-center font-semibold underline" href={creationLaw}>{tr(["Journal officiel · Loi de création de la CARMI (PDF)", "الجريدة الرسمية · قانون إنشاء الصندوق (PDF)"])}</a>
+              </div>
+            <div>
+              <SectionTitle label={tr(["Découvrir le projet", "التعرّف على المشروع"])} title={tr(["Questions fréquentes", "الأسئلة الشائعة"])} />
+              <div className="space-y-2">
+                {questions.map(({ q, a }) => (
+                  <details className="premium-card group" key={q[0]}>
+                    <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 p-4 text-sm font-bold">
+                      {tr(q)} <ChevronDown aria-hidden="true" size={18} className="shrink-0 group-open:rotate-180" />
+                    </summary>
+                    <p className="px-4 pb-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{tr(a)}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+            </div>
+          </Container>
+        </section>
+      )}
     </>
   );
 }
@@ -276,7 +358,7 @@ export function PremiumTracking() {
           <p className="mt-4 leading-relaxed">{tr(["La consultation des dossiers est suspendue. Aucun matricule ni renseignement personnel n’est demandé.", "الاطّلاع على الملفات معطّل. لا نطلب أي رقم تسجيل أو معلومات شخصية."])}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link className="premium-button bg-army-900 text-white dark:bg-gold-300 dark:text-army-950" href="/">{tr(["Retour à l’accueil", "العودة إلى الرئيسية"])}</Link>
-            <Link className="premium-button border border-slate-500" href="/#calendrier">{tr(["Calendrier fictif", "التقويم الافتراضي"])}</Link>
+            <Link className="premium-button border border-slate-500" href="/calendrier">{tr(["Calendrier fictif", "التقويم الافتراضي"])}</Link>
           </div>
         </div>
       </Container>

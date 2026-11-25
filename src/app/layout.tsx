@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { PortalProvider } from "@/lib/i18n";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SkipLink } from "@/components/portal/SkipLink";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -40,14 +41,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="fr" suppressHydrationWarning>
       <body className="bg-tactical-50 font-sans text-tactical-900 antialiased dark:bg-tactical-950 dark:text-white">
         <PortalProvider>
-          <a
-            href="#contenu"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-gold-500 focus:px-4 focus:py-2 focus:text-sm focus:font-black focus:text-army-950"
-          >
-            Aller au contenu principal
-          </a>
+          <SkipLink />
           <SiteHeader />
-          <main id="contenu">{children}</main>
+          <main id="contenu" tabIndex={-1}>{children}</main>
           <SiteFooter />
         </PortalProvider>
       </body>

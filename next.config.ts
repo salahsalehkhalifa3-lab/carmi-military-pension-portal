@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
         { key: "Referrer-Policy", value: "no-referrer" },
         { key: "X-Content-Type-Options", value: "nosniff" },
       ],
+    }, {
+      source: "/api/:path*",
+      headers: [{ key: "Cache-Control", value: "no-store" }],
     }];
   },
 };

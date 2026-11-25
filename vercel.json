@@ -9,7 +9,8 @@
       "feature/carmi-p7c-direction": false,
       "feature/carmi-portrait-prive": false,
       "feature/carmi-p7d": false,
-      "fix/carmi-p7d1": false
+      "fix/carmi-p7d1": false,
+      "release/carmi-p7e-candidate": false
     }
   }
 }

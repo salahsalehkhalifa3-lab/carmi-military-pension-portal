@@ -19,6 +19,8 @@ const DICT: Dict = {
     fr: "Version de démonstration — Proposition de portail institutionnel réalisée par PROSPERA Tchad, soumise à validation de la CARMI.",
     ar: "نسخة تجريبية — مقترح بوابة مؤسسية من PROSPERA Tchad، يخضع لاعتماد صندوق تقاعد العسكريين.",
   },
+  credit_prefix: { fr: "Conception et développement :", ar: "التصميم والتطوير:" },
+  credit_suffix: { fr: "Ingénierie et Solutions numériques.", ar: "الهندسة والحلول الرقمية." },
   ribbon: {
     fr: "RÉPUBLIQUE DU TCHAD | C.A.R.M.I.",
     ar: "جمهورية تشاد | صندوق تقاعد العسكريين",

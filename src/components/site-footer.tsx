@@ -33,7 +33,7 @@ export function SiteFooter() {
           </nav>
         </div>
         <p className="mt-6 border-t border-white/10 pt-5 text-sm">
-          Conception et développement : <a href="https://prosperachad.site" className="font-bold text-gold-300 underline">PROSPERA Tchad</a> — Ingénierie et Solutions numériques.
+          {t("credit_prefix")} <a href="https://prosperachad.site" className="font-bold text-gold-300 underline">PROSPERA Tchad</a> — {t("credit_suffix")}
         </p>
       </div>
     </footer>

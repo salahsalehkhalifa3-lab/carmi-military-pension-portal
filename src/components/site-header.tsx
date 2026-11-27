@@ -79,7 +79,7 @@ export function SiteHeader() {
               ))}
             </nav>
 
-            <div className="ms-auto flex shrink-0 items-center gap-1.5">
+            <div className="ms-auto flex max-w-full shrink-0 flex-wrap justify-end items-center gap-1 min-[280px]:gap-1.5">
               <SuspendedLink
                 className="tap-target inline-flex items-center justify-center rounded-xl bg-gold-500 px-3 text-army-950 transition hover:bg-gold-400 min-[1600px]:hidden"
                 aria-label={`Appeler la CARMI au ${CONTACT.phoneDisplay}`}

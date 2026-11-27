@@ -34,7 +34,6 @@ export const NAV_LINKS = [
   { href: "/#calendrier", key: "nav_calendar" as const, label: "Calendrier" },
   { href: "/#agences", key: "nav_agencies" as const, label: "Agences" },
   { href: "/#simulateur", key: "nav_calculator" as const, label: "Simulateur" },
-  { href: "/#actualites", key: "nav_news" as const, label: "Actualités" },
   { href: "/#commandement", key: "nav_command" as const, label: "Commandement" },
   { href: "/#contact", key: "nav_contact" as const, label: "Contact" },
   { href: "/suivi", key: "nav_tracking" as const, label: "Suivi de dossier" },

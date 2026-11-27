@@ -1,11 +1,14 @@
 "use client";
 
+import Image from "next/image";
+import { usePortal } from "@/lib/i18n";
 import { useState } from "react";
 import { ChevronDown, Quote, ShieldCheck, Target } from "lucide-react";
 import { FAQ, LEADERSHIP } from "@/lib/institution";
 import { Reveal, SectionHeading } from "@/components/ui";
 
-export function Command() {
+export function Command({ showPortrait }: { showPortrait: boolean }) {
+  const { lang } = usePortal();
   return (
     <section
       id="commandement"
@@ -23,6 +26,11 @@ export function Command() {
             <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10">
               <div className="relative aspect-[4/3] w-full bg-army-900">
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-army-900 to-army-950" />
+                {showPortrait && (
+                  <Image src="/image/dgcarmi.jpg" width={294} height={473} unoptimized
+                    alt={lang === "ar" ? "صورة تاريخية" : "Portrait historique"}
+                    className="absolute inset-0 h-full w-full object-contain" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-army-950 via-army-950/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4">
                   <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-gold-400">
@@ -40,7 +48,9 @@ export function Command() {
               <blockquote className="border-t border-slate-200 bg-tactical-50 p-4 dark:border-white/10 dark:bg-white/5">
                 <Quote className="h-5 w-5 text-gold-500" strokeWidth={2.1} />
                 <p className="mt-1.5 text-[0.85rem] italic leading-relaxed text-slate-700 dark:text-slate-200">
-                  Portrait officiel en attente de validation.
+                  {showPortrait
+                    ? (lang === "ar" ? "صورة تاريخية — الهوية وإذن النشر قيد التحقق." : "Portrait historique — attribution et diffusion à valider.")
+                    : "Portrait officiel en attente de validation."}
                 </p>
               </blockquote>
             </div>

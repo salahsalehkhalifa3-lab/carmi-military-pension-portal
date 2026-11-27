@@ -6,7 +6,11 @@ import { News } from "@/components/sections/news";
 import { Command, Faq } from "@/components/sections/command";
 import { Contact } from "@/components/sections/contact";
 
-export default function HomePage() {
+import { historicalPortrait } from "@/lib/historical-portrait";
+
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
 
   return (
     <>
@@ -16,7 +20,7 @@ export default function HomePage() {
       <Agencies agencies={[]} />
       <Calculator />
       <News news={[]} />
-      <Command />
+      <Command showPortrait={Boolean(await historicalPortrait())} />
       <Faq />
       <Contact regions={[]} services={[]} />
     </>

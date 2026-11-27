@@ -22,7 +22,7 @@ export function Hero({ period, pensioners }: { period: string; pensioners: numbe
 
   return (
     <section className="relative isolate overflow-hidden bg-army-950 text-white">
-      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-army-900 to-army-950" />
+      <div aria-hidden="true" className="absolute inset-0 -z-20 bg-gradient-to-br from-army-900 to-army-950" />
       {shareNotice && <p role="status" className="fixed inset-x-4 bottom-24 z-[100] mx-auto w-fit rounded-lg bg-army-950 p-2 text-xs text-white">{suspended[lang]}</p>}
       <div
         className="absolute inset-0 -z-10 bg-gradient-to-b from-army-950/95 via-army-900/90 to-army-950"

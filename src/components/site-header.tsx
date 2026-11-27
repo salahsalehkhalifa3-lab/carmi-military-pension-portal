@@ -39,10 +39,11 @@ export function SiteHeader() {
         </div>
 
         <div className="border-b border-white/10 bg-army-900/98 backdrop-blur">
-          <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-3 sm:h-[4.5rem] sm:px-5">
+          <div className="mx-auto flex min-h-16 max-w-[96rem] flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2 min-[480px]:flex-nowrap sm:min-h-[4.5rem] sm:px-5">
             <Link
               href="/"
-              className="flex min-w-0 flex-1 items-center gap-2.5"
+              dir="ltr"
+              className="flex min-w-0 basis-full items-center gap-2.5 min-[480px]:flex-1 min-[1600px]:min-w-[13rem]"
               aria-label={`${SITE_SHORT} — Accueil`}
             >
               <Image
@@ -54,10 +55,10 @@ export function SiteHeader() {
                 className="h-11 w-11 shrink-0 rounded-lg bg-white object-contain p-0.5 sm:h-12 sm:w-12"
               />
               <span className="min-w-0">
-                <span className="block truncate text-base font-black leading-none tracking-tight text-white sm:text-xl">
+                <span className="block text-base font-black leading-none tracking-tight text-white sm:text-xl">
                   C.A.R.M.I.
                 </span>
-                <span className="mt-1 block truncate text-[0.62rem] font-medium uppercase leading-tight tracking-[0.09em] text-gold-300 sm:text-[0.7rem]">
+                <span className="mt-1 block text-[0.62rem] font-medium uppercase leading-tight tracking-[0.09em] text-gold-300 sm:text-[0.7rem]">
                   Caisse de Retraite des Militaires
                 </span>
               </span>
@@ -65,22 +66,22 @@ export function SiteHeader() {
 
             <nav
               aria-label="Navigation principale"
-              className="hidden items-center gap-1 lg:flex"
+              className="hidden shrink-0 items-center gap-1 min-[1600px]:flex"
             >
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-gold-300"
+                  className="whitespace-nowrap rounded-lg px-2 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-gold-300"
                 >
                   {t(link.key, link.label)}
                 </Link>
               ))}
             </nav>
 
-            <div className="flex items-center gap-1.5">
+            <div className="ms-auto flex shrink-0 items-center gap-1.5">
               <SuspendedLink
-                className="tap-target inline-flex items-center justify-center rounded-xl bg-gold-500 px-3 text-army-950 transition hover:bg-gold-400 lg:hidden"
+                className="tap-target inline-flex items-center justify-center rounded-xl bg-gold-500 px-3 text-army-950 transition hover:bg-gold-400 min-[1600px]:hidden"
                 aria-label={`Appeler la CARMI au ${CONTACT.phoneDisplay}`}
               >
                 <Phone className="h-5 w-5" strokeWidth={2.1} />
@@ -90,7 +91,7 @@ export function SiteHeader() {
                 aria-label="Assistance WhatsApp CARMI"
               >
                 <MessageCircle className="h-5 w-5" strokeWidth={2.1} />
-                <span className="hidden xl:inline">{t("helpdesk")}</span>
+                <span className="hidden min-[1600px]:inline">{t("helpdesk")}</span>
               </SuspendedLink>
               <button
                 type="button"
@@ -99,7 +100,7 @@ export function SiteHeader() {
                 aria-label={lang === "fr" ? "التبديل إلى العربية" : "Switch to French"}
               >
                 <Languages className="h-4 w-4" strokeWidth={2} />
-                {t("lang_toggle")}
+                <span className="hidden min-[280px]:inline">{t("lang_toggle")}</span>
               </button>
               <button
                 type="button"
@@ -116,7 +117,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="tap-target inline-flex items-center justify-center rounded-xl bg-white/10 px-3 text-white transition hover:bg-white/20 lg:hidden"
+                className="tap-target inline-flex items-center justify-center rounded-xl bg-white/10 px-3 text-white transition hover:bg-white/20 min-[1600px]:hidden"
                 aria-label={t("menu")}
                 aria-expanded={open}
               >
@@ -130,7 +131,7 @@ export function SiteHeader() {
       <AnimatePresence>
         {open ? (
           <motion.div
-            className="fixed inset-0 z-[60] lg:hidden"
+            className="fixed inset-0 z-[60] min-[1600px]:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

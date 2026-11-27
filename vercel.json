@@ -1,7 +1,9 @@
 {
   "git": {
     "deploymentEnabled": {
-      "release/carmi-original-safe-public": false
+      "release/carmi-original-safe-public": false,
+      "fix/carmi-original-header-dg": false,
+      "preview/carmi-original-header-dg-portrait": false
     }
   }
 }

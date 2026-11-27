@@ -45,7 +45,7 @@ export function SiteHeader() {
               aria-label={`${SITE_SHORT} — Accueil`}
             >
               <Image
-                src="/images/carmi-logo.png"
+                src="/image/logocarmi.jpg"
                 alt="Sceau officiel de la Caisse de Retraite des Militaires"
                 width={56}
                 height={56}

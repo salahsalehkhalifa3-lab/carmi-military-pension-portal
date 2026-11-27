@@ -31,7 +31,7 @@ export function Command({ showPortrait }: { showPortrait: boolean }) {
                     alt={lang === "ar" ? "صورة تاريخية" : "Portrait historique"}
                     className="absolute inset-0 h-full w-full object-contain" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-army-950 via-army-950/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-army-950/95 via-transparent to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4">
                   <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-gold-400">
                     CARMI

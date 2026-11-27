@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { CalendarDays, CreditCard, Share2, ShieldCheck } from "lucide-react";
 import { usePortal } from "@/lib/i18n";
-import { trackShare } from "@/lib/share";
+import { useState } from "react";
+import { suspended } from "@/lib/suspended";
 import { CONTACT } from "@/lib/institution";
 
 const STATS = [
@@ -16,40 +16,14 @@ const STATS = [
 export function Hero({ period, pensioners }: { period: string; pensioners: number }) {
   const { t } = usePortal();
 
-  const shareNative = async () => {
-    trackShare("native", "page");
-    const message =
-      "Infos officielles CARMI : calendrier de paiement des soldes de retraite, bancarisation et contrôle de vie.";
-    const nav = typeof navigator !== "undefined" ? navigator : undefined;
-    if (nav && "share" in nav) {
-      try {
-        await nav.share({
-          title: "C.A.R.M.I. — Caisse de Retraite des Militaires",
-          text: message,
-          url: window.location.href,
-        });
-        return;
-      } catch {
-        /* annulation */
-      }
-    }
-    window.open(
-      `https://wa.me/?text=${encodeURIComponent(`${message} ${window.location.href}`)}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
-  };
+  const { lang } = usePortal();
+  const [shareNotice, setShareNotice] = useState(false);
+  const shareNative = () => setShareNotice(!shareNotice);
 
   return (
     <section className="relative isolate overflow-hidden bg-army-950 text-white">
-      <Image
-       src="/image/dgcarmi.jpg"
-       alt="Directeur Général de la CARMI"
-       fill
-       priority
-       sizes="100vw"
-       className="absolute inset-0 -z-20 h-full w-full object-cover opacity-45"
-      />
+      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-army-900 to-army-950" />
+      {shareNotice && <p role="status" className="fixed inset-x-4 bottom-24 z-[100] mx-auto w-fit rounded-lg bg-army-950 p-2 text-xs text-white">{suspended[lang]}</p>}
       <div
         className="absolute inset-0 -z-10 bg-gradient-to-b from-army-950/95 via-army-900/90 to-army-950"
         aria-hidden="true"

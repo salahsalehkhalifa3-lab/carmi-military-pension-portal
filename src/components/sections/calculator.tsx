@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   BadgeCheck,
   Calculator as CalculatorIcon,
   CircleAlert,
   FileCheck2,
   HandCoins,
-  LoaderCircle,
 } from "lucide-react";
 import {
   computeEstimate,
@@ -17,15 +16,16 @@ import {
   UNITS,
   type EstimateResult,
 } from "@/lib/institution";
+import { usePortal } from "@/lib/i18n";
 import { Reveal, SectionHeading } from "@/components/ui";
 
 export function Calculator() {
+  const { lang } = usePortal();
   const [rank, setRank] = useState<string>(RANKS[1].value);
   const [unit, setUnit] = useState<string>(UNITS[0].value);
   const [years, setYears] = useState<number>(22);
   const [disabilityRate, setDisability] = useState<number>(0);
   const [survivor, setSurvivor] = useState<"non" | "veuve" | "orphelin">("non");
-  const [saving, setSaving] = useState(false);
   const [savedRef, setSavedRef] = useState<string | null>(null);
 
   const result: EstimateResult = useMemo(
@@ -33,27 +33,8 @@ export function Calculator() {
     [rank, unit, years, disabilityRate, survivor],
   );
 
-  useEffect(() => {
-    setSavedRef(null);
-  }, [rank, unit, years, disabilityRate, survivor]);
-
-  async function persist() {
-    setSaving(true);
-    try {
-      const res = await fetch("/api/estimate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rank, unit, years, disabilityRate, survivor }),
-      });
-      const data = (await res.json()) as {
-        estimate?: { reference: string };
-      };
-      setSavedRef(data.estimate?.reference ?? result.reference);
-    } catch {
-      setSavedRef(result.reference);
-    } finally {
-      setSaving(false);
-    }
+  function showLocalReference() {
+    setSavedRef(result.reference);
   }
 
   return (
@@ -65,7 +46,7 @@ export function Calculator() {
         <SectionHeading
           eyebrow="Simulateur & Éligibilité"
           title="Estimez votre solde de retraite et vos pièces à fournir"
-          intro="Réglez votre grade, vos années de service et votre unité (ANT, Gendarmerie, Police, GNNT) : le simulateur calcule un taux de liquidation indicatif et génère la liste des pièces exigées par la Direction des Pensions."
+          intro="Réglez votre grade, vos années de service et votre unité (ANT, Gendarmerie, Police, GNNT) : le simulateur illustre un calcul fictif et une liste de pièces à titre d’exemple."
         />
 
         <div className="mt-6 grid gap-4 lg:grid-cols-5">
@@ -175,19 +156,15 @@ export function Calculator() {
 
               <button
                 type="button"
-                onClick={persist}
+                onClick={showLocalReference}
                 className="tap-target mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950 transition hover:bg-gold-400"
               >
-                {saving ? (
-                  <LoaderCircle className="h-5 w-5 animate-spin" strokeWidth={2.2} />
-                ) : (
-                  <CalculatorIcon className="h-5 w-5" strokeWidth={2.2} />
-                )}
-                Enregistrer ma simulation
+                <FileCheck2 className="h-5 w-5" strokeWidth={2.2} />
+                {lang === "ar" ? "عرض المرجع المحلي" : "Afficher la référence locale"}
               </button>
-              {savedRef ? (
+              {savedRef === result.reference ? (
                 <p className="mt-2 text-center text-[0.72rem] font-semibold text-emerald-600 dark:text-emerald-400">
-                  Simulation enregistrée — référence {savedRef}
+                  {lang === "ar" ? "محاكاة افتراضية · مرجع محلي" : "Simulation fictive · référence locale"} {savedRef}
                 </p>
               ) : null}
             </div>

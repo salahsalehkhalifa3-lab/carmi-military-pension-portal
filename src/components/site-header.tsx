@@ -1,5 +1,6 @@
 "use client";
 
+import { SuspendedLink } from "@/components/suspended-link";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,7 +16,7 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { CONTACT, NAV_LINKS, SITE_SHORT, SOCIALS } from "@/lib/institution";
+import { CONTACT, NAV_LINKS, SITE_SHORT } from "@/lib/institution";
 import { usePortal } from "@/lib/i18n";
 
 export function SiteHeader() {
@@ -78,25 +79,19 @@ export function SiteHeader() {
             </nav>
 
             <div className="flex items-center gap-1.5">
-              <a
-                href={`tel:${CONTACT.phone}`}
+              <SuspendedLink
                 className="tap-target inline-flex items-center justify-center rounded-xl bg-gold-500 px-3 text-army-950 transition hover:bg-gold-400 lg:hidden"
                 aria-label={`Appeler la CARMI au ${CONTACT.phoneDisplay}`}
               >
                 <Phone className="h-5 w-5" strokeWidth={2.1} />
-              </a>
-              <a
-                href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
-                  "Bonjour CARMI, je souhaite un renseignement sur ma solde de retraite.",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              </SuspendedLink>
+              <SuspendedLink
                 className="tap-target hidden items-center gap-2 rounded-xl bg-emerald-600 px-3 text-sm font-bold text-white transition hover:bg-emerald-500 sm:inline-flex"
                 aria-label="Assistance WhatsApp CARMI"
               >
                 <MessageCircle className="h-5 w-5" strokeWidth={2.1} />
                 <span className="hidden xl:inline">{t("helpdesk")}</span>
-              </a>
+              </SuspendedLink>
               <button
                 type="button"
                 onClick={toggleLang}
@@ -188,30 +183,23 @@ export function SiteHeader() {
               </nav>
 
               <div className="mt-auto space-y-2 border-t border-white/10 p-3">
-                <a
-                  href={`tel:${CONTACT.phone}`}
+                <SuspendedLink
                   className="tap-target flex items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950"
                 >
                   <Phone className="h-5 w-5" strokeWidth={2.1} />
                   {CONTACT.phoneDisplay}
-                </a>
-                <a
-                  href={`https://wa.me/${CONTACT.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                </SuspendedLink>
+                <SuspendedLink
                   className="tap-target flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-black text-white"
                 >
                   <MessageCircle className="h-5 w-5" strokeWidth={2.1} />
                   Assistance WhatsApp
-                </a>
-                <a
-                  href={SOCIALS.whatsappChannel}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                </SuspendedLink>
+                <SuspendedLink
                   className="tap-target flex items-center justify-center gap-2 rounded-xl border border-gold-500/50 px-4 text-xs font-bold text-gold-300"
                 >
                   Canal officiel WhatsApp CARMI
-                </a>
+                </SuspendedLink>
                 <p className="pt-1 text-center text-[0.65rem] leading-relaxed text-slate-400">
                   {CONTACT.address}
                 </p>

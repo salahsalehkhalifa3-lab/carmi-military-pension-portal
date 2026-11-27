@@ -1,9 +1,10 @@
 "use client";
 
+import { SuspendedLink } from "@/components/suspended-link";
 import Image from "next/image";
 import Link from "next/link";
 import { Landmark, ShieldCheck } from "lucide-react";
-import { CONTACT, NAV_LINKS, SITE_NAME, SOCIALS } from "@/lib/institution";
+import { CONTACT, NAV_LINKS, SITE_NAME } from "@/lib/institution";
 import { OfficialChannels, ShareRow } from "@/components/share";
 
 export function SiteFooter() {
@@ -74,30 +75,25 @@ export function SiteFooter() {
             </h2>
             <ul className="mt-3 space-y-2 text-[0.84rem]">
               <li>
-                <a
-                  href={`tel:${CONTACT.phone}`}
+                <SuspendedLink
                   className="inline-flex min-h-11 items-center gap-2 font-bold text-gold-300"
                 >
                   {CONTACT.phoneDisplay}
-                </a>
+                </SuspendedLink>
               </li>
               <li>
-                <a
-                  href={`https://wa.me/${CONTACT.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <SuspendedLink
                   className="inline-flex min-h-11 items-center gap-2 font-bold text-emerald-400"
                 >
                   Assistance WhatsApp
-                </a>
+                </SuspendedLink>
               </li>
               <li>
-                <a
-                  href={`mailto:${CONTACT.email}`}
+                <SuspendedLink
                   className="inline-flex min-h-11 items-center gap-2 break-all text-slate-300"
                 >
                   {CONTACT.email}
-                </a>
+                </SuspendedLink>
               </li>
               <li className="inline-flex min-h-11 items-start gap-2 text-slate-400">
                 <Landmark className="mt-1 h-4 w-4 shrink-0 text-gold-500" strokeWidth={2.1} />
@@ -121,14 +117,11 @@ export function SiteFooter() {
                 <ShareRow title="Portail officiel CARMI" target="footer-page" />
               </div>
             </div>
-            <a
-              href={SOCIALS.whatsappChannel}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SuspendedLink
               className="tap-target mt-3 inline-flex w-full items-center justify-center rounded-xl bg-emerald-600 px-4 text-[0.78rem] font-black text-white"
             >
               Rejoindre le canal WhatsApp CARMI
-            </a>
+            </SuspendedLink>
           </div>
         </div>
 

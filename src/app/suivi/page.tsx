@@ -1,3 +1,4 @@
+import { SuspendedLink } from "@/components/suspended-link";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,13 +52,12 @@ export default function SuiviPage() {
               <CalendarDays className="h-5 w-5" strokeWidth={2.2} />
               Calendrier de paiement
             </a>
-            <a
-              href={`tel:${CONTACT.helpline}`}
+            <SuspendedLink
               className="tap-target inline-flex items-center justify-center gap-2 rounded-xl border border-gold-500/50 px-4 text-sm font-bold text-gold-300"
             >
               <Phone className="h-5 w-5" strokeWidth={2.2} />
               {CONTACT.helplineDisplay}
-            </a>
+            </SuspendedLink>
           </div>
         </div>
       </section>

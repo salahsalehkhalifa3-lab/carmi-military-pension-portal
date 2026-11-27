@@ -67,15 +67,6 @@ export function defaultShareMessage(title?: string): string {
     : `Infos officielles de la ${SITE_NAME} (CARMI) : calendrier de paiement des soldes, bancarisation et contrôle de vie.`;
 }
 
-export function trackShare(channel: ShareChannel, target: string): void {
-  void fetch("/api/shares", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ channel, target }),
-    keepalive: true,
-  }).catch(() => undefined);
-}
-
 export async function copyToClipboard(value: string): Promise<boolean> {
   try {
     await navigator.clipboard.writeText(value);

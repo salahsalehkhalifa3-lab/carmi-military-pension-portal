@@ -1,5 +1,6 @@
 "use client";
 
+import { SuspendedLink } from "@/components/suspended-link";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -96,15 +97,12 @@ export function Services({ services }: { services: PensionService[] }) {
                   BCC, UBA Tchad, Ecobank, CBT et Aird Money.
                 </p>
               </div>
-              <a
-                href="https://wa.me/23566001122?text=Bonjour%20CARMI%2C%20je%20souhaite%20ouvrir%20un%20compte%20bancaire%20militaire."
-                target="_blank"
-                rel="noopener noreferrer"
+              <SuspendedLink
                 className="tap-target inline-flex items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 text-sm font-black text-army-950 transition hover:bg-gold-400"
               >
                 <MessageCircle className="h-5 w-5" strokeWidth={2.2} />
                 Être accompagné
-              </a>
+              </SuspendedLink>
             </div>
           </Reveal>
         </div>

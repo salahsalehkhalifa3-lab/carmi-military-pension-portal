@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { ChevronDown, Quote, ShieldCheck, Target } from "lucide-react";
 import { FAQ, LEADERSHIP } from "@/lib/institution";
@@ -23,23 +22,17 @@ export function Command() {
           <Reveal>
             <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10">
               <div className="relative aspect-[4/3] w-full bg-army-900">
-                <Image
-                  src="/image/dgcarmi.jpg"
-                  alt="Directeur Général de la Caisse de Retraite des Militaires"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 33vw"
-                  className="object-cover"
-                />
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-br from-army-900 to-army-950" />
                 <div className="absolute inset-0 bg-gradient-to-t from-army-950 via-army-950/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4">
                   <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-gold-400">
-                    {LEADERSHIP.rank}
+                    CARMI
                   </p>
                   <p className="text-lg font-black leading-tight text-white">
-                    {LEADERSHIP.name}
+                    Direction générale
                   </p>
                   <p className="mt-0.5 text-[0.72rem] font-medium leading-tight text-slate-200">
-                    {LEADERSHIP.role}
+                    Caisse de Retraite des Militaires
                   </p>
                 </div>
                 <div className="flag-lisere absolute inset-x-0 top-0 h-1.5" aria-hidden="true" />
@@ -47,7 +40,7 @@ export function Command() {
               <blockquote className="border-t border-slate-200 bg-tactical-50 p-4 dark:border-white/10 dark:bg-white/5">
                 <Quote className="h-5 w-5 text-gold-500" strokeWidth={2.1} />
                 <p className="mt-1.5 text-[0.85rem] italic leading-relaxed text-slate-700 dark:text-slate-200">
-                  {LEADERSHIP.citation}
+                  Portrait officiel en attente de validation.
                 </p>
               </blockquote>
             </div>

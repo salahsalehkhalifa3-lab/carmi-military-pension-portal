@@ -41,11 +41,6 @@ export const NAV_LINKS = [
 ];
 
 export const LEADERSHIP = {
-  rank: "Général de Division",
-  name: "Dr. Abdelkerim Mahamat Itno",
-  role: "Directeur Général de la Caisse de Retraite des Militaires",
-  citation:
-    "Celui qui a porté l'uniforme ne doit jamais porter le doute. Notre devoir est de servir le vétéran avec la même rigueur qu'il a servie la Nation.",
   priorities: [
     {
       title: "Modernisation administrative",
